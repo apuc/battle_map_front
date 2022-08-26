@@ -20,12 +20,15 @@ export const dateReducer = (state = initialState, action) => {
     case SET_END_DATE:
       return {
         ...state,
-        endDate: action.payload.endDate
+        endDate: action.payload.endDate,
+
       }
     case SET_SELECTED_DATE:
       return {
         ...state,
-        selectedDate: action.payload.selectedDate
+        selectedDate: action.payload.selectedDate,
+        startDate: null,
+        endDate: null,
       }
     default:
       return state

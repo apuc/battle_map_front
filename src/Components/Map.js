@@ -79,8 +79,6 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
 
    }, [mapRef.current])
 
-   console.log('red')
-
    return (
      <MapContainer
        className={'map'}

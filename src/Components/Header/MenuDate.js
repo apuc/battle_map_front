@@ -169,6 +169,9 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
    return (
      <>
         <ul className='menu-date' data-da='header__menu,first,646'>
+           <li data-da={'menu-top,2,646'} className={'menu-date__item menu-date__item_question'} onClick={() => setActiveModal(true)}>
+              <span className={'menu-date__item_icon-info'}>?</span>
+           </li>
            <li className='menu-date__item' onClick={() => onChangeDateOnly(new Date())} >
               Сегодня:{' '}
               <span>{currentDate.toLocaleString('ru', optionsDate)}</span>
@@ -191,9 +194,6 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
                 selectsRange={true}
                 startPlayer={startPlayer}
               />
-           </li>
-           <li data-da={'menu-top,2,646'} className={'menu-date__item menu-date__item_question'} onClick={() => setActiveModal(true)}>
-              <span className={'menu-date__item_icon-info'}>?</span>
            </li>
         </ul>
 
