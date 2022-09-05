@@ -2,6 +2,7 @@ import React, { forwardRef, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import './calendar.scss'
+import {useParams} from "react-router-dom";
 
 export const Calendar = ({
   onChange,
@@ -15,14 +16,16 @@ export const Calendar = ({
       {value || 'Выберите период'}
     </button>
   ))
+  let params = useParams();
+  console.log(new Date(params.date))
 
   return (
     <div className={'calendar'}>
       <DatePicker
         dateFormat='dd.MM.yyyy'
-        selected={startDate}
+        selected={new Date(params.date) || startDate}
         onChange={onChange}
-        startDate={startDate}
+        startDate={new Date(params.date) || startDate}
         endDate={endDate}
         selectsRange={selectsRange}
         minDate={new Date('2/24/22')}

@@ -1,17 +1,37 @@
 import React, {useRef, useState} from 'react'
 import {Map} from './Components/Map'
-import {Dsa, ListEvents} from './Components/ListEvents/ListEvents'
+import {ListEvents} from './Components/ListEvents/ListEvents'
 import {Header} from './Components/Header/Header'
+import {
+   Routes,
+   Route
+} from "react-router-dom";
 
 const App = () => {
 
+
+   return (
+     <div className={'App'}>
+        <Routes>
+           <Route path="">
+              <Route path=":date/:latitude/:longitude/:scale/" element={<Main/>}/>
+              <Route path=":date" element={<Main/>}/>
+              <Route path="" element={<Main/>}/>
+           </Route>
+        </Routes>
+     </div>
+   )
+}
+
+
+const Main = () => {
    const [startPlayer, setStartPlayer] = useState(false)
    const [activeModal, setActiveModal] = useState(false)
 
    const mapRef = useRef()
 
    return (
-     <div className={'App'}>
+     <>
         <Header
           startPlayer={startPlayer}
           mapRef={mapRef}
@@ -25,10 +45,11 @@ const App = () => {
              mapRef={mapRef}
            />
            <ListEvents mapRef={mapRef}/>
-           {/*<Dsa mapRef={mapRef}/>*/}
         </main>
-     </div>
-   )
-}
 
-export default App
+     </>
+   );
+};
+
+export default App;
+

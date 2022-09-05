@@ -15,9 +15,12 @@ import {FullscreenControl} from 'react-leaflet-fullscreen'
 import 'react-leaflet-fullscreen/dist/styles.css'
 import {mapCenterUkraine} from '../Constants'
 import {Player} from './Player/Player'
+import {useParams} from "react-router-dom";
 
 
 export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
+
+   let params = useParams();
 
    const geojsonData = useSelector(filteredDataOnDate)
    const dispatch = useDispatch()
@@ -26,6 +29,11 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
       minZoom: 0,
       maxZoom: 13
    });
+
+   const zoom = params.scale || 6
+   const paramsDate = params.date || selectedDate.toLocaleString('sv-SE').substring(0, 10)
+
+   console.log(params, paramsDate)
 
    const mediaScreen684 = window.matchMedia('(max-width: 684px)')
 
@@ -58,9 +66,9 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
 
    useEffect(() => {
       dispatch(
-        getDataGeoJson(selectedDate.toLocaleString('sv-SE').substring(0, 10))
+        getDataGeoJson(paramsDate)
       ) // eslint-disable-next-line
-   }, [selectedDate])
+   }, [paramsDate])
 
    useEffect(() => {
       mapRef.current && new L.Control.MiniMap(minimapLayer, {
@@ -83,7 +91,7 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
      <MapContainer
        className={'map'}
        center={mapCenterUkraine}
-       zoom={6}
+       zoom={zoom}
        zoomControl={true}
        whenCreated={(mapInstance) => {
           mapRef.current = mapInstance
@@ -91,7 +99,7 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
      >
         <LayersControl position='topleft' collapsed={false}>
            <LayersControl.BaseLayer
-             checked={false}
+             checked={true}
              name='OpenStreetMap'
              group='BaseLayers'
            >
@@ -101,7 +109,7 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
               />
            </LayersControl.BaseLayer>
            <LayersControl.BaseLayer
-             checked={true}
+             checked={false}
              name='Mapbox'
              group='BaseLayers'
            >

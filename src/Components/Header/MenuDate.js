@@ -5,13 +5,18 @@ import {useDispatch, useSelector} from "react-redux";
 import {setEndDate, setSelectedDate, setStartDate} from "../../redux/Date/dataAction";
 import {getDataGeoJson} from "../../redux/GeoJson/geoJsonAction";
 import {Modal} from "../Modal/Modal";
+import {useNavigate, useParams} from "react-router-dom";
+import {useLocation} from "react-router-dom";
+import {Navigate} from "react-router";
 
 const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
 
+   let params = useParams();
    const dispatch = useDispatch()
    const startDate = useSelector((state) => state.date.startDate)
    const endDate = useSelector((state) => state.date.endDate)
    const selectedDate = useSelector((state) => state.date.selectedDate)
+   const navigate = useNavigate()
 
    const onChangeDatePeriod = (dates) => {
       const [start, end] = dates
@@ -164,7 +169,12 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
    const onChangeDateOnly = (dates) => {
       dispatch(setSelectedDate(dates))
       setBurgerActive(false)
+      navigate("/"+dates.toLocaleString('sv-SE').substring(0, 10))
    }
+
+   useEffect(()=>{
+
+   }, [params.date])
 
    return (
      <>
