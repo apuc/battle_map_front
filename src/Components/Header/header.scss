@@ -88,7 +88,7 @@
     font-family: inherit;
   }
   &__buttons-block{
-    margin: 20px 15px;
+    margin: 20px 0;
     display: none;
     @media (max-width: 874px){
       display: block;
@@ -104,7 +104,6 @@
   flex-wrap: wrap;
   list-style: none;
   gap: 5px;
-  padding: 10px;
   position: relative;
   z-index: 2;
   @media (max-width: 992px) {
@@ -195,57 +194,47 @@
   @media (max-width: 646px) {
     display: flex;
     flex-wrap: wrap;
-    gap: 0;
+    justify-content: space-between;
+    gap: 10px;
     padding: 0;
-  }
-  @media (max-width: 541px) {
-    display: block;
   }
 
   &__item {
-    color: #ffffff;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 400;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 3px;
     cursor: pointer;
     position: relative;
+    transition: 0.2s all;
+    color: rgba(255,255,255,0.8);
     @media (max-width: 646px) {
-      flex: 1 1 50%;
-      padding: 0 15px;
-      flex-direction: row;
-      margin: 0 0 10px 0;
       font-size: 18px;
-      white-space: nowrap;
-    }
-    &_icon-info{
-      font-size: 30px;
+      flex-direction: row;
     }
     span {
-      padding: 3px 8px;
       background: transparent;
       border-radius: 10px;
       cursor: pointer;
       display: block;
-      color: #fff;
-      font-weight: 700;
+      font-weight: 400;
       margin-left: 5px;
     }
-    @media (max-width: 646px) {
-      &_question{
-        flex: 1 1 10%;
-        padding: 0;
-        margin: 0;
-        justify-content: center;
-        span{
-          margin: 0;
-          padding: 0;
-        }
-      }
-
+    &:hover{
+      color: #ffffff;
     }
+  }
+
+  &__icon-info{
+    border: 1px solid;
+    font-weight: 500;
+    padding: 0 14px;
+    border-radius: 50%;
+    font-size: 30px;
+    margin: 0 0 0 10px;
+    z-index: 2;
   }
 }
 

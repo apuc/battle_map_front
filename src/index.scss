@@ -69,6 +69,9 @@ code {
 .leaflet-touch .leaflet-bar {
   border: none;
 }
+.leaflet-top .leaflet-control {
+  margin-top: 20px;
+}
 .loading{
   display: flex;
   align-items: center;

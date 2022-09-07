@@ -1,22 +1,38 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {mapCenterDonbass, mapCenterUkraine, menuHeaderList} from "../../Constants";
 import axios from "axios";
+import {useNavigate, useParams} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const MenuTop = ({mapRef, setBurgerActive}) => {
 
-   const [activeMenuItem, setActiveMenuItem] = useState(0)
+   let params = useParams();
+
+   let activeIndex = +params.latitude === mapCenterDonbass[0] && +params.longitude === mapCenterDonbass[1] ? 1 : 0
+
+   const [activeMenuItem, setActiveMenuItem] = useState(activeIndex)
+
+
    const [activeSubMenuItem, setActiveSubMenuItem] = useState(null)
    const [listBattles, setListBattles] = useState(null)
    const [showSubMenu, setShowSubMenu] = useState(false)
+   const selectedDate = useSelector((state) => state.date.selectedDate)
+
+   const navigate = useNavigate()
+
+   console.log(listBattles)
 
    const showMapCenter = (e) => {
+      console.log("center")
       const index = e.target.dataset.index
       switch (index) {
          case '0':
+            navigate('/'+selectedDate.toLocaleString('sv-SE').substring(0, 10)+'/'+mapCenterUkraine[0]+'/'+mapCenterUkraine[1]+'/'+6)
             mapRef.current.setView(mapCenterUkraine, 6)
             setActiveMenuItem(+e.target.dataset.index)
             break
          case '1':
+           navigate('/'+ selectedDate.toLocaleString('sv-SE').substring(0, 10)+'/'+mapCenterDonbass[0]+'/'+mapCenterDonbass[1]+'/'+7)
             mapRef.current.setView(mapCenterDonbass, 7)
             setActiveMenuItem(+e.target.dataset.index)
             break
@@ -26,10 +42,19 @@ const MenuTop = ({mapRef, setBurgerActive}) => {
       setActiveSubMenuItem(null)
       setBurgerActive(false)
    }
+   // const a = mapRef.current&& mapRef.current.getBounds()._northEast.lat
+   // console.log(a)
+  // const memoizedMapCenter= useCallback(() => showMapCenter, [a]);
 
    const toFocusEvent = (e, item) => {
+     // navigate('/'+ selectedDate.toLocaleString('sv-SE').substring(0, 10)+'/'+mapCenterDonbass[0]+'/'+mapCenterDonbass[1]+'/'+7)
+      console.log(item.bounds)
+      const a = (JSON.parse(item.bounds)[0][0] + JSON.parse(item.bounds)[1][0]) / 2
+      const b = (JSON.parse(item.bounds)[0][1] + JSON.parse(item.bounds)[1][1]) / 2
       item.bounds && mapRef.current.fitBounds(JSON.parse(item.bounds), {padding: [50, 50]})
+      //mapRef.current.setView([a, b], 11)
       setActiveSubMenuItem(+e.target.dataset.index)
+
       setBurgerActive(false)
    }
 

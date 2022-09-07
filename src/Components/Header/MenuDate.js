@@ -23,6 +23,8 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
       dispatch(setStartDate(start))
       dispatch(setEndDate(end))
       if (start && end) {
+         console.log(start, end)
+        // navigate("/"+start.toLocaleString('sv-SE').substring(0, 10)+'.'+ end.toLocaleString('sv-SE').substring(0, 10))
          dispatch(
            getDataGeoJson(
              start.toLocaleString('sv-SE').substring(0, 10),
@@ -169,6 +171,8 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
    const onChangeDateOnly = (dates) => {
       dispatch(setSelectedDate(dates))
       setBurgerActive(false)
+      let remainingParams = (params?.latitude + '/' + params?.longitude + '/' + params?.scale) || ''
+      console.log(remainingParams ? 5 :4)
       navigate("/"+dates.toLocaleString('sv-SE').substring(0, 10))
    }
 
@@ -179,30 +183,30 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
    return (
      <>
         <ul className='menu-date' data-da='header__menu,first,646'>
-           <li data-da={'menu-top,2,646'} className={'menu-date__item menu-date__item_question'} onClick={() => setActiveModal(true)}>
-              <span className={'menu-date__item_icon-info'}>?</span>
+           <li data-da={'header__container,1,646'} className={'menu-date__item menu-date__item_question'} onClick={() => setActiveModal(true)}>
+              <div className={'menu-date__icon-info'}>?</div>
            </li>
            <li className='menu-date__item' onClick={() => onChangeDateOnly(new Date())} >
-              Сегодня:{' '}
+              <div className="menu-date__title">Сегодня:</div>
               <span>{currentDate.toLocaleString('ru', optionsDate)}</span>
            </li>
            <li className='menu-date__item'>
-              Выбранная дата:{' '}
               <Calendar
                 startDate={selectedDate}
                 onChange={onChangeDateOnly}
                 selectsRange={false}
                 startPlayer={startPlayer}
+                title={'Выбранная дата:'}
               />
            </li>
            <li className='menu-date__item'>
-              Период:{' '}
               <Calendar
                 startDate={startDate}
                 endDate={endDate}
                 onChange={onChangeDatePeriod}
                 selectsRange={true}
                 startPlayer={startPlayer}
+                title={'Период:'}
               />
            </li>
         </ul>

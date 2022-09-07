@@ -33,7 +33,6 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
    const zoom = params.scale || 6
    const paramsDate = params.date || selectedDate.toLocaleString('sv-SE').substring(0, 10)
 
-   console.log(params, paramsDate)
 
    const mediaScreen684 = window.matchMedia('(max-width: 684px)')
 
@@ -90,7 +89,7 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
    return (
      <MapContainer
        className={'map'}
-       center={mapCenterUkraine}
+       center={!(params.latitude && params.longitude) ? mapCenterUkraine : [+params.latitude, +params.longitude]}
        zoom={zoom}
        zoomControl={true}
        whenCreated={(mapInstance) => {
