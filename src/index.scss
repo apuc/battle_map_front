@@ -49,7 +49,8 @@ code {
 }
 
 .map {
-  flex: 0 0 80%;
+  flex: 0 0 100%;
+  //width: 100%;
   height: calc(100% - 50px);
   top: 50px;
   @media (max-width: 874px) {
