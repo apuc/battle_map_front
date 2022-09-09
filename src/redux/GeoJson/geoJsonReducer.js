@@ -14,7 +14,7 @@ export const geoJsonReducer = (state = initialState, action) => {
              storeGeoJsonForPeriod: action.payload.geoJsonData,
              storeGeoJson: action.payload.geoJsonData.sort((a, b) => Date.parse(a.date) - Date.parse(b.date))[0].json_data
           }
-       }else if(!action.payload.geoJsonData){
+       }else if(!action.payload.geoJsonData.json_data){
           return {
              ...state,
              storeGeoJson: null,

@@ -9,17 +9,24 @@ export const setGeoJson = (geoJsonData) => ({
 export const zeroingDataPeriodGeoJson = () => ({type: ZEROING_GEO_JSON_FOR_PERIOD})
 
 
-export const getDataGeoJson = (date,endDate=null) => async (dispatch) => {
+export const getDataGeoJson = (date) => async (dispatch) => {
+
+  const endDate = date.substring(11,21)
+  const startDate = date.substring(0,10)
+
+  console.log(startDate, endDate, 'geoJsonData')
+
   try {
     if(endDate){
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/map/get-data/?startDate=${date}&date=${endDate}`)
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/map/get-data/?startDate=${startDate}&date=${endDate}`)
       if(!response.data.hasErrors){
         dispatch(setGeoJson(response.data.data))
       }else {
+        dispatch(setGeoJson({json_data: null}))
         alert("Данных за этот период нет!")
       }
     }else {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/map/get-data/?date=${date}`)
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/map/get-data/?date=${startDate}`)
       dispatch(setGeoJson(response.data.data))
       dispatch(zeroingDataPeriodGeoJson())
     }

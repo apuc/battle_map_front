@@ -1,13 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {currentDate, optionsDate} from "../../Constants";
+import {currentDate, formatDate, optionsDate} from "../../Constants";
 import {Calendar} from "../Calendar/Calendar";
 import {useDispatch, useSelector} from "react-redux";
 import {setEndDate, setSelectedDate, setStartDate} from "../../redux/Date/dataAction";
-import {getDataGeoJson} from "../../redux/GeoJson/geoJsonAction";
-import {Modal} from "../Modal/Modal";
 import {useNavigate, useParams} from "react-router-dom";
-import {useLocation} from "react-router-dom";
-import {Navigate} from "react-router";
 
 const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
 
@@ -15,7 +11,7 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
    const dispatch = useDispatch()
    const startDate = useSelector((state) => state.date.startDate)
    const endDate = useSelector((state) => state.date.endDate)
-   const selectedDate = useSelector((state) => state.date.selectedDate)
+   const startDateParams =  params.date ? params.date.substring(0,10).toDate('dd.mm.yyyy', '.') : new Date()
    const navigate = useNavigate()
 
    const onChangeDatePeriod = (dates) => {
@@ -23,17 +19,10 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
       dispatch(setStartDate(start))
       dispatch(setEndDate(end))
       if (start && end) {
-         console.log(start, end)
-        // navigate("/"+start.toLocaleString('sv-SE').substring(0, 10)+'.'+ end.toLocaleString('sv-SE').substring(0, 10))
-         dispatch(
-           getDataGeoJson(
-             start.toLocaleString('sv-SE').substring(0, 10),
-             end.toLocaleString('sv-SE').substring(0, 10)
-           )
-         )
-         setBurgerActive(false)
+        navigate("/"+formatDate(start) + '-' + formatDate(end))
+        setBurgerActive(false)
       }
-
+      console.log(params)
    }
 
    useEffect(()=>{
@@ -169,16 +158,11 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
    },[])
 
    const onChangeDateOnly = (dates) => {
-      dispatch(setSelectedDate(dates))
       setBurgerActive(false)
       let remainingParams = (params?.latitude + '/' + params?.longitude + '/' + params?.scale) || ''
       console.log(remainingParams ? 5 :4)
-      navigate("/"+dates.toLocaleString('sv-SE').substring(0, 10))
+      navigate("/"+ formatDate(dates))
    }
-
-   useEffect(()=>{
-
-   }, [params.date])
 
    return (
      <>
@@ -192,7 +176,7 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
            </li>
            <li className='menu-date__item'>
               <Calendar
-                startDate={selectedDate}
+                startDate={startDateParams}
                 onChange={onChangeDateOnly}
                 selectsRange={false}
                 startPlayer={startPlayer}

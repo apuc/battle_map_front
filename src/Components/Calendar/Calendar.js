@@ -12,24 +12,27 @@ export const Calendar = ({
                             startPlayer,
                             title
                          }) => {
+
+   let params = useParams();
+
+   console.log(params.date)
    const CustomInput = forwardRef(({value, onClick}, ref) => (
      <div className="calendar" onClick={onClick} ref={ref}>
         <div className="calendar__title">
            {title}
         </div>
         <div className='calendar__input'>
-           {value || 'Выберите период'}
+           {(value || (params.date.length > 10 ? params.date.split('-').join(' - ') : 'Выберите период')) || 'Выберите период'}
         </div>
      </div>
 
    ))
-   let params = useParams();
-   console.log(new Date(params.date), endDate)
+
    return (
      <div className={'calendar'}>
         <DatePicker
           dateFormat='dd.MM.yyyy'
-          selected={params.date ? new Date(params.date) : startDate}
+          selected={startDate}
           onChange={onChange}
           startDate={startDate}
           endDate={endDate}
