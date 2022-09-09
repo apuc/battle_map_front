@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {mapCenterDonbass, mapCenterUkraine, menuHeaderList} from "../../Constants";
+import {currentDate, formatDate, mapCenterDonbass, mapCenterUkraine, menuHeaderList} from "../../Constants";
 import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -20,19 +20,26 @@ const MenuTop = ({mapRef, setBurgerActive}) => {
 
    const navigate = useNavigate()
 
-   console.log(listBattles)
+   console.log('render menu top')
+
+   const remainingParams = (arrayCoordinates, zoom) => {
+      return params.date ?
+        params.date + '/' + arrayCoordinates[0] + '/' + arrayCoordinates[1] +'/' + zoom
+        :
+        formatDate(currentDate) + '/' + arrayCoordinates[0] + '/' + arrayCoordinates[1] +'/' + zoom
+   }
 
    const showMapCenter = (e) => {
-      console.log("center")
       const index = e.target.dataset.index
       switch (index) {
          case '0':
-            navigate('/'+selectedDate.toLocaleString('sv-SE').substring(0, 10)+'/'+mapCenterUkraine[0]+'/'+mapCenterUkraine[1]+'/'+6)
+
+            navigate('/'+ remainingParams(mapCenterUkraine,6))
             mapRef.current.setView(mapCenterUkraine, 6)
             setActiveMenuItem(+e.target.dataset.index)
             break
          case '1':
-           navigate('/'+ selectedDate.toLocaleString('sv-SE').substring(0, 10)+'/'+mapCenterDonbass[0]+'/'+mapCenterDonbass[1]+'/'+7)
+            navigate('/'+ remainingParams(mapCenterDonbass, 7))
             mapRef.current.setView(mapCenterDonbass, 7)
             setActiveMenuItem(+e.target.dataset.index)
             break

@@ -19,7 +19,8 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
       dispatch(setStartDate(start))
       dispatch(setEndDate(end))
       if (start && end) {
-        navigate("/"+formatDate(start) + '-' + formatDate(end))
+        let remainingParams = params.latitude ? params.latitude + '/' + params?.longitude + '/' + params?.scale : ''
+        navigate("/"+formatDate(start) + '-' + formatDate(end) + '/' +remainingParams)
         setBurgerActive(false)
       }
       console.log(params)
@@ -159,9 +160,8 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
 
    const onChangeDateOnly = (dates) => {
       setBurgerActive(false)
-      let remainingParams = (params?.latitude + '/' + params?.longitude + '/' + params?.scale) || ''
-      console.log(remainingParams ? 5 :4)
-      navigate("/"+ formatDate(dates))
+      let remainingParams = params.latitude ? params.latitude + '/' + params?.longitude + '/' + params?.scale : ''
+      navigate("/"+ formatDate(dates)+'/'+remainingParams)
    }
 
    return (
