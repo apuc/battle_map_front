@@ -15,14 +15,14 @@ export const Calendar = ({
 
    let params = useParams();
 
-   console.log(params.date)
+   console.log('render calendar')
    const CustomInput = forwardRef(({value, onClick}, ref) => (
      <div className="calendar" onClick={onClick} ref={ref}>
         <div className="calendar__title">
            {title}
         </div>
         <div className='calendar__input'>
-           {(value || (params.date.length > 10 ? params.date.split('-').join(' - ') : 'Выберите период')) || 'Выберите период'}
+           {(value || (params?.date && params?.date.length > 10 ? params?.date.replace('-', ' - ') : 'Выберите период')) || 'Выберите период'}
         </div>
      </div>
 
