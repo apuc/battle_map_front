@@ -30,8 +30,6 @@ export const ListEvents = ({mapRef}) => {
 
    let params = useParams();
 
-   const shareUrl = "https://front.dnr.one/api/news/news?expand=tags,comments,photo,news_body,like&news_id=57"
-
    let LeafIcon = L.Icon.extend({
       options: {
          iconSize: [38, 38],
@@ -55,6 +53,16 @@ export const ListEvents = ({mapRef}) => {
          navigate('/' + timeConverter(date) + '/' + mapCenterUkraine[0] + '/' + mapCenterUkraine[1] + '/' + 6)
       }
    }
+
+   useEffect(() => {
+      if(mapRef.current){
+         const center = news.find((item) => item.coordinates === (params.latitude+','+params.longitude)).coordinates.split(',')
+         setNewMarker(L.marker(center).addTo(mapRef.current))
+         console.log(center)
+      }
+   }, [mapRef.current])
+
+   console.log('render events')
 
    useEffect(() => {
       dispatch(getNews(currentPage, fetching, params.date))
@@ -133,10 +141,14 @@ export const ListEvents = ({mapRef}) => {
                       </div>
                       <div className="events-list__share">
                          Поделиться:
-                         <TelegramShareButton url={shareUrl}>
+                         <TelegramShareButton
+                           url={'https://map.da-info.pro/' + timeConverter(list.published_date) + '/' + list.coordinates.replace(',', '/') + '/' + zoom}
+                         >
                             <TelegramIcon size={25} round={true}/>
                          </TelegramShareButton>
-                         <VKShareButton url={shareUrl}>
+                         <VKShareButton
+                           url={'https://map.da-info.pro/' + timeConverter(list.published_date) + '/' + list.coordinates.replace(',', '/') + '/' + zoom}
+                         >
                             <VKIcon size={25} round={true}/>
                          </VKShareButton>
                       </div>
