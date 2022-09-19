@@ -3,13 +3,13 @@ import './listEvents.scss'
 import {useDispatch, useSelector} from 'react-redux'
 import L from 'leaflet'
 import {_metaNewsSelector, isFetchingSelector, isLoadingSelector, newsSelector} from '../../redux/News/newsSelectors'
-import {getNews, setFetching} from '../../redux/News/newsAction'
+import {getMoreNews, getNews, setFetching} from '../../redux/News/newsAction'
 import logo from './../../Logo.jpg'
 import {timeConverter, timeConverterUnix} from "../../utils/configData";
 import icon_back from '../../icon-back-arrow-40.png'
 import {TelegramIcon, VKIcon, VKShareButton, TelegramShareButton} from "react-share";
 import {useNavigate, useParams} from "react-router-dom";
-import {currentDate, formatDate} from "../../Constants";
+import {currentDate, formatDate, mapCenterUkraine} from "../../Constants";
 
 
 export const ListEvents = ({mapRef}) => {
@@ -38,24 +38,32 @@ export const ListEvents = ({mapRef}) => {
       }
    });
 
-   const showEvent = (id, date, event) => {
-      if (id === selectedNewsID) return
-      newMarker && newMarker.remove()
-      setSelectedNewsID(id)
-      const center = news.find((item) => item.id === id).coordinates.split(',')
-      mapRef.current.setView(center, zoom)
-      let icon = new LeafIcon({iconUrl: 'https://front.dnr.one/' + event?.icon})
-      setNewMarker(L.marker(center, {icon: icon}).addTo(mapRef.current))
-      navigate('/'+timeConverter(date)+'/' + center[0] + '/' + center[1] +'/' + zoom)
-   }
-   let p = params.date
-   useEffect(() => {
-     // mapRef.current&&params.latitude&&setNewMarker(L.marker([params.latitude, params.longitude]).addTo(mapRef.current))
-      if (fetching) {
-         dispatch(getNews(currentPage, params.date))
-         setCurrentPage(prev => prev + 1)
+   const showEvent = (id, date, event, coordinates) => {
+      if (coordinates) {
+         if (id === selectedNewsID) return
+         newMarker && newMarker.remove()
+         setSelectedNewsID(id)
+         const center = news.find((item) => item.id === id).coordinates.split(',')
+         mapRef.current.setView(center, zoom)
+         let icon = new LeafIcon({iconUrl: 'https://front.dnr.one/' + event?.icon})
+         setNewMarker(L.marker(center, {icon: icon}).addTo(mapRef.current))
+         navigate('/' + timeConverter(date) + '/' + center[0] + '/' + center[1] + '/' + zoom)
+      } else {
+         newMarker && newMarker.remove()
+         setSelectedNewsID(id)
+         mapRef.current.setView(mapCenterUkraine, 6)
+         navigate('/' + timeConverter(date) + '/' + mapCenterUkraine[0] + '/' + mapCenterUkraine[1] + '/' + 6)
       }
+   }
+
+   useEffect(() => {
+      dispatch(getNews(currentPage, fetching, params.date))
+      setCurrentPage(prev => prev + 1)
    }, [fetching])
+
+   useEffect(() => {
+      dispatch(getMoreNews(currentPage, params.date))
+   }, [params.date])
 
    useEffect(() => {
       let scrollList = document.querySelector('.list-events__container')
@@ -63,7 +71,7 @@ export const ListEvents = ({mapRef}) => {
       return function () {
          scrollList.removeEventListener('scroll', scrollHandler)
       }
-   }, [fetching])
+   }, [news])
 
 
    const scrollHandler = (e) => {
@@ -81,7 +89,7 @@ export const ListEvents = ({mapRef}) => {
    }
 
    const toggleEvent = (e) => {
-      if (e.target.classList.contains('events-list__button-further')){
+      if (e.target.classList.contains('events-list__button-further')) {
          let card_text = e.target.closest('.events-list').querySelector('.events-list__text');
          let button_text = e.target.closest('.events-list').querySelector('.events-list__button-further');
          card_text.hidden = !card_text.hidden;
@@ -90,14 +98,13 @@ export const ListEvents = ({mapRef}) => {
    }
 
 
-
    return (
      <div className='list-events'>
         <img className={'list-events__hide'} src={icon_back} alt="back"
              onClick={hideNews}/>
         {
            <div className='list-events__container'>
-              <h3>Последние события:</h3>
+              <h3>{!news.length ? 'Событий за этот период нет!' : 'Последние события:'}</h3>
               {
                  news.map((list) => (
                    <article
@@ -107,7 +114,7 @@ export const ListEvents = ({mapRef}) => {
                           : 'events-list'
                      }
                      key={list.id}
-                     onClick={() => showEvent(list.id, list.published_date, list.event)}
+                     onClick={() => showEvent(list.id, list.published_date, list.event, list.coordinates)}
                    >
                       <div className='events-list__header'>
                          <div className='events-list__icon'>

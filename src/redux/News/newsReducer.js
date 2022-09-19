@@ -1,9 +1,9 @@
-import {GET_NEWS,SET_NEWS, TOGGLE_IS__FETCHING} from './newsConstants'
+import {GET_NEWS, SET_NEWS, SUPPLEMENT_NEWS, TOGGLE_IS__FETCHING} from './newsConstants'
 
 let initialState = {
   news: [],
   meta: null,
-  fetching: true
+  fetching: false
 }
 
 export const newsReducer = (state = initialState, action) => {
@@ -12,6 +12,13 @@ export const newsReducer = (state = initialState, action) => {
       return {
         ...state,
         news: [...state.news, ...action.payload.news],
+        meta: action.payload._meta
+      }
+    case SUPPLEMENT_NEWS:
+      console.log(action.payload.news)
+      return {
+        ...state,
+        news: action.payload.news,
         meta: action.payload._meta
       }
     case TOGGLE_IS__FETCHING:
