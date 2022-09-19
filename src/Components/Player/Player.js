@@ -21,7 +21,7 @@ export const Player = ({ startPlayer, setStartPlayer }) => {
   const [progressValue, setProgressValue] = useState(0)
 
   const stepPlayer = geojsonData
-    ? +(100 / (geojsonData.length - 1)).toFixed(12)
+    ? + Math.floor( (100 / (geojsonData.length - 1)) * 100 ) / 100
     : 0
 
   const changeProgressBar = (e) => {

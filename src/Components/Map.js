@@ -31,7 +31,7 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
    });
 
    const zoom = params.scale || 6
-   const paramsDate = params.date || selectedDate.toLocaleString('sv-SE').substring(0, 10)
+   const paramsDate = params.date || selectedDate.toLocaleDateString()
 
 
    const mediaScreen684 = window.matchMedia('(max-width: 684px)')

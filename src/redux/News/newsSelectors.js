@@ -1,8 +1,15 @@
 export const newsSelector = (state) => {
-  const date = state.date.selectedDate
-  //console.log(typeof date)
-
-  // let result = state.news.news.filter(item => item.created_at <= date.toLocaleString("sv-SE").substring(0,10))
-
   return state.news.news
+}
+
+export const _metaNewsSelector = (state) => {
+  return state.news.meta
+}
+
+export const isLoadingSelector = (state) => {
+  return state.news.isLoading
+}
+
+export const isFetchingSelector = (state) => {
+  return state.news.fetching
 }

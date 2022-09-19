@@ -1,28 +1,40 @@
 import axios from 'axios'
-import { SET_NEWS } from './newsConstants'
-import {optionsDate} from "../../Constants";
-import {timeConverter, timeConverterUnix} from "../../utils/configData";
+import {SET_NEWS, TOGGLE_IS__FETCHING} from './newsConstants'
+import {timeConverterUnix} from "../../utils/configData";
 
 const setNews = (news) => ({
-  type: SET_NEWS,
-  payload: news
+   type: SET_NEWS,
+   payload: news
 })
 
+export const setFetching = (value) => ({type: TOGGLE_IS__FETCHING, payload: value})
 
-export const getNews = (dateFrom,dateTo) => async (dispatch) => {
-  try {
-    if(!dateTo) dateTo = timeConverterUnix(new Date())
-    if(!dateFrom) dateFrom = timeConverterUnix(new Date().setDate(new Date().getDate() - 7))
+export const getNews = (page, date) => async (dispatch) => {
 
+   const dateFrom = date && timeConverterUnix(date.substring(0, 10))
+   const dateTo = date && timeConverterUnix(date.substring(11, 21))
 
-    const response = await axios.get(
-      `${process.env.REACT_APP_BASE_URL}/news/get-events?dateFrom=${dateFrom}&dateTo=${dateTo}`
-    )
+   let path = `${process.env.REACT_APP_BASE_URL}news/filter?expand=category,tags,comments_count,photo,news_body,like&page=${page}`
 
-    dispatch(setNews(response.data))
-
-  } catch (e) {
-    console.log(e)
-  }
+   try {
+      if (date) {
+         switch (date.length) {
+            case 10:
+               path += `&from_date=${dateFrom}&published=${(dateFrom+82800)+3599}`
+               break
+            case 21:
+               path += `&from_date=${dateFrom}&published=${dateTo}`
+               break
+            default:
+               path += ''
+         }
+      }
+      const response = await axios.get(path)
+      dispatch(setNews(response.data))
+   } catch (e) {
+      console.log(e)
+   } finally {
+      dispatch(setFetching(false))
+   }
 }
 
