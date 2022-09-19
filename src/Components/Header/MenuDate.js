@@ -23,7 +23,6 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
         navigate("/"+formatDate(start) + '-' + formatDate(end) + '/' +remainingParams)
         setBurgerActive(false)
       }
-      console.log(params)
    }
 
    useEffect(()=>{

@@ -15,7 +15,6 @@ export const newsReducer = (state = initialState, action) => {
         meta: action.payload._meta
       }
     case SUPPLEMENT_NEWS:
-      console.log(action.payload.news)
       return {
         ...state,
         news: action.payload.news,

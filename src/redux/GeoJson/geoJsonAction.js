@@ -14,8 +14,6 @@ export const getDataGeoJson = (date) => async (dispatch) => {
   const endDate = date.substring(11,21)
   const startDate = date.substring(0,10)
 
-  console.log(startDate, endDate, 'geoJsonData')
-
   try {
     if(endDate){
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/map/get-data/?startDate=${startDate}&date=${endDate}`)

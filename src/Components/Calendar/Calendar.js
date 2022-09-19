@@ -15,7 +15,6 @@ export const Calendar = ({
 
    let params = useParams();
 
-   console.log('render calendar')
    const CustomInput = forwardRef(({value, onClick}, ref) => (
      <div className="calendar" onClick={onClick} ref={ref}>
         <div className="calendar__title">

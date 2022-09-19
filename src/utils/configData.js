@@ -15,10 +15,6 @@ export const timeConverter = (UNIX_timestamp) => {
 }
 
 export const timeConverterUnix = (date) => {
-
   let changeDateFormat = date[3]+date[4] + '.' +date[0] + date[1] + '.' + date[6] + date[7] +date [8] + date[9]
-  console.log(new Date(changeDateFormat).getTime() / 1000)
-  console.log(Date.parse(changeDateFormat) / 1000)
-
   return  Math.floor(Date.parse(changeDateFormat) / 1000);
 }

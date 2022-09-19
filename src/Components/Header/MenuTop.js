@@ -20,8 +20,6 @@ const MenuTop = ({mapRef, setBurgerActive}) => {
 
    const navigate = useNavigate()
 
-   console.log('render menu top')
-
    const remainingParams = (arrayCoordinates, zoom) => {
       return params.date ?
         params.date + '/' + arrayCoordinates[0] + '/' + arrayCoordinates[1] +'/' + zoom
