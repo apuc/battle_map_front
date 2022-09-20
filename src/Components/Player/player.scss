@@ -7,21 +7,24 @@
   z-index: 999;
   margin: 0 215px 0 45px;
   bottom: 0;
-  width: -webkit-fill-available;
+  width: 75%;
 
-  @media (max-width: 684px) {
+  @media (max-width: 1200px) {
+    width: 64%;
+  }
+  @media (max-width: 768px) {
     position: absolute;
     z-index: 999;
     margin: 0 48px 20px 45px;
-    bottom: 0;
     width: -webkit-fill-available;
+    bottom: 0;
   }
   &__container {
     display: flex;
     align-items: baseline;
-    justify-content: space-between;
-    padding: 20px 60px 10px 36px;
-    border-radius: 50px;
+    justify-content: space-evenly;
+    padding: 10px 5px 5px 5px;
+    border-radius: 10px;
     background: #ffffffe8;
     @media (max-width: 684px) {
       flex-direction: column;
@@ -31,8 +34,6 @@
   }
   &__control {
     display: flex;
-    justify-content: center;
-    flex: 0 1 20%;
   }
   &__strip {
     position: relative;

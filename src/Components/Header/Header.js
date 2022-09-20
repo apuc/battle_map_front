@@ -4,11 +4,17 @@ import './header.scss'
 import {Modal} from "../Modal/Modal";
 import MenuTop from "./MenuTop";
 import MenuDate from "./MenuDate";
+import {ListEvents} from "../ListEvents/ListEvents";
 
 export const Header = ({startPlayer, mapRef, setActiveModal, activeModal}) => {
 
    const [burgerActive, setBurgerActive] = useState(false)
+   const [activeListEvents, setActiveListEvents] = useState(false)
 
+   const openListEventsModal = () => {
+      setActiveListEvents(true)
+      setBurgerActive(false)
+   }
    return (
      <header className="header">
         <div className="header__container">
@@ -26,8 +32,13 @@ export const Header = ({startPlayer, mapRef, setActiveModal, activeModal}) => {
               </div>
               <MenuTop mapRef={mapRef} setBurgerActive={setBurgerActive}/>
               <MenuDate startPlayer={startPlayer} setActiveModal={setActiveModal} setBurgerActive={setBurgerActive}/>
-              <nav className={burgerActive ? 'header__menu active' : 'header__menu'} />
-           </div> 
+              <nav className={burgerActive ? 'header__menu active' : 'header__menu'}>
+                 <div className={'header__buttons-block'}>
+                    <button className={'header__button'} onClick={()=>openListEventsModal()}>Последние события</button>
+                 </div>
+
+              </nav>
+           </div>
            <Modal setActive={setActiveModal} active={activeModal} title={'Информация'}>
               <div className={'info'}>
                  <p className={'info__text'}>Внимание!</p>
@@ -37,6 +48,10 @@ export const Header = ({startPlayer, mapRef, setActiveModal, activeModal}) => {
                     военной операции на Украине на основании информаци и российских официальных источников.</p>
               </div>
            </Modal>
+           {<Modal active={activeListEvents} setActive={setActiveListEvents} title={'Последние события'} margin={0}>
+              <div className="sdad"></div>
+           </Modal>}
+
         </div>
      </header>
    )

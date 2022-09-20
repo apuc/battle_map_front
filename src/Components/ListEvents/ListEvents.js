@@ -117,7 +117,7 @@ export const ListEvents = ({mapRef}) => {
 
 
    return (
-     <div className='list-events'>
+     <div className='list-events' data-da='sdad,3,768'>
         <img className={'list-events__hide'} src={icon_back} alt="back"
              onClick={hideNews}/>
         {

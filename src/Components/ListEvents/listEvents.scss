@@ -5,17 +5,15 @@
   right: 0;
   height: 100%;
   z-index: 2000;
-  flex: 0 0 20%;
+  flex: 0 0 30%;
   transition: 1s all;
 
-  @media (max-width: 1100px) {
-    flex: 0 0 30%;
+  @media (min-width: 1200px) {
+    flex: 0 0 20%;
   }
-  @media (max-width: 874px) {
-    flex: 0 0 50%;
+  @media (max-width: 768px) {
+    padding: 0;
   }
-
-
   h3 {
     padding: 40px 18px 20px 18px;
     color: #001c30;
@@ -32,6 +30,9 @@
     transition: 0.8s all ease;
     transform: rotateY(180deg);
     cursor: pointer;
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 }
 
@@ -39,6 +40,11 @@
   //height: calc(100% - 85px);
   height: 100%;
   overflow: auto;
+  h3{
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
 }
 
 .events-list {
