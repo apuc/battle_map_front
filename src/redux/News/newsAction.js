@@ -13,7 +13,7 @@ const supplementNews = (news) => ({
 
 export const setFetching = (value) => ({type: TOGGLE_IS__FETCHING, payload: value})
 
-export const getNews = (page, fetching,date) => async (dispatch) => {
+export const getMoreNews = (page, fetching,date) => async (dispatch) => {
 
    const dateFrom = date && timeConverterUnix(date.substring(0, 10))
    const dateTo = date && timeConverterUnix(date.substring(11, 21))
@@ -34,8 +34,6 @@ export const getNews = (page, fetching,date) => async (dispatch) => {
          }
       }
       const response = await axios.get(path)
-        // if(fetching){
-
       if(fetching){
          dispatch(setNews(response.data))
       }
@@ -56,7 +54,7 @@ export const getNews = (page, fetching,date) => async (dispatch) => {
 }
 
 
-export const getMoreNews = (page, date) => async (dispatch) => {
+export const getNews = (page, date) => async (dispatch) => {
 
    const dateFrom = date && timeConverterUnix(date.substring(0, 10))
    const dateTo = date && timeConverterUnix(date.substring(11, 21))

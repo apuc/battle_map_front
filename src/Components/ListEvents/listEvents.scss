@@ -26,7 +26,7 @@
   }
   &__hide{
     position: absolute;
-    top: 70px;
+    top: calc(50% - 60px);
     left: -20px;
     transform-style: preserve-3d;
     transition: 0.8s all ease;

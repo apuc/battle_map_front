@@ -14,7 +14,7 @@ const App = () => {
      <div className={'App'}>
         <Routes>
            <Route path="">
-              <Route path=":date/:latitude/:longitude/:scale/" element={<Main/>}/>
+              <Route path=":date/:id" element={<Main/>}/>
               <Route path=":date" element={<Main/>}/>
               <Route path="" element={<Main/>}/>
            </Route>

@@ -44,24 +44,25 @@ export const ListEvents = ({mapRef}) => {
          mapRef.current.setView(center, zoom)
          let icon = new LeafIcon({iconUrl: 'https://front.dnr.one/' + event?.icon})
          setNewMarker(L.marker(center, {icon: icon}).addTo(mapRef.current))
-         navigate('/' + timeConverter(date) + '/' + center[0] + '/' + center[1] + '/' + zoom)
       } else {
          mapRef.current.setView(mapCenterUkraine, 6)
-         navigate('/' + timeConverter(date) + '/' + mapCenterUkraine[0] + '/' + mapCenterUkraine[1] + '/' + 6)
       }
+      navigate('/' + timeConverter(date) + '/' + id)
    }
 
    useEffect(() => {
-      if(mapRef.current && params.latitude && params.longitude){
-         const activeEvent = news.find((item) => item.coordinates === (params.latitude+','+params.longitude))
-         console.log(activeEvent)
-         if(activeEvent){
+      if (mapRef.current && params.id) {
+         const activeEvent = news.find((item) => item.id === +params.id)
+         setSelectedNewsID(activeEvent.id)
+         const eventList = document.getElementById(`${activeEvent.id}`)
+         eventList.scrollIntoView({block: "center", behavior: "smooth"})
+         if (activeEvent.coordinates) {
             const center = activeEvent.coordinates.split(',')
             let icon = new LeafIcon({iconUrl: 'https://front.dnr.one/' + activeEvent.event?.icon})
-            setSelectedNewsID(activeEvent.id)
-            setNewMarker(L.marker(center,{icon: icon}).addTo(mapRef.current))
-            const eventList = document.getElementById(`${activeEvent.id}`)
-            eventList.scrollIntoView({block: "center", behavior: "smooth"})
+            setNewMarker(L.marker(center, {icon: icon}).addTo(mapRef.current))
+            mapRef.current.setView(center, zoom)
+         } else {
+            mapRef.current.setView(mapCenterUkraine, 6)
          }
       }
    }, [mapRef.current])
@@ -69,12 +70,15 @@ export const ListEvents = ({mapRef}) => {
    console.log('render events')
 
    useEffect(() => {
-      dispatch(getNews(currentPage, fetching, params.date))
-      setCurrentPage(prev => prev + 1)
+
+         dispatch(getMoreNews(currentPage, fetching, params.date))
+         setCurrentPage(prev => prev + 1)
+
+
    }, [fetching])
 
    useEffect(() => {
-      dispatch(getMoreNews(currentPage, params.date))
+      dispatch(getNews(currentPage, params.date))
    }, [params.date])
 
    useEffect(() => {
@@ -87,7 +91,7 @@ export const ListEvents = ({mapRef}) => {
 
 
    const scrollHandler = (e) => {
-      if (e.target.scrollHeight - (e.target.scrollTop + window.innerHeight) < 100 && news.length < metaNews.totalCount) {
+      if (e.target.scrollHeight - (e.target.scrollTop + window.innerHeight) < 100 && news.length < metaNews.totalCount && currentPage <= metaNews.pageCount) {
          dispatch(setFetching(true))
       }
    }
@@ -103,9 +107,11 @@ export const ListEvents = ({mapRef}) => {
    const toggleEvent = (e) => {
       if (e.target.classList.contains('events-list__button-further')) {
          let card_text = e.target.closest('.events-list').querySelector('.events-list__text');
+         let card_event = e.target.closest('.events-list');
          let button_text = e.target.closest('.events-list').querySelector('.events-list__button-further');
          card_text.hidden = !card_text.hidden;
          button_text.innerHTML = card_text.hidden ? 'Развернуть' : 'Скрыть';
+         card_event.scrollIntoView({block: "center", behavior: "smooth"})
       }
    }
 
@@ -126,7 +132,7 @@ export const ListEvents = ({mapRef}) => {
                           : 'events-list'
                      }
                      key={list.id}
-                     id={list.id+''}
+                     id={list.id + ''}
                      onClick={() => showEvent(list.id, list.published_date, list.event, list.coordinates)}
                    >
                       <div className='events-list__header'>
@@ -147,12 +153,12 @@ export const ListEvents = ({mapRef}) => {
                       <div className="events-list__share">
                          Поделиться:
                          <TelegramShareButton
-                           url={'https://map.da-info.pro/' + timeConverter(list.published_date) + '/' + list.coordinates.replace(',', '/') + '/' + zoom}
+                           url={'https://map.da-info.pro/' + timeConverter(list.published_date) + '/' + list.id}
                          >
                             <TelegramIcon size={25} round={true}/>
                          </TelegramShareButton>
                          <VKShareButton
-                           url={'https://map.da-info.pro/' + timeConverter(list.published_date) + '/' + list.coordinates.replace(',', '/') + '/' + zoom}
+                           url={'https://map.da-info.pro/' + timeConverter(list.published_date) + '/' + list.id}
                          >
                             <VKIcon size={25} round={true}/>
                          </VKShareButton>
