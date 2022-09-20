@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import './calendar.scss'
 import {useParams} from "react-router-dom";
-
+import { ru } from "date-fns/locale";
 export const Calendar = ({
                             onChange,
                             endDate,
@@ -39,6 +39,7 @@ export const Calendar = ({
           minDate={new Date('2/24/22')}
           maxDate={new Date()}
           disabled={startPlayer}
+          locale={ru}
           customInput={<CustomInput/>}
         />
      </div>
