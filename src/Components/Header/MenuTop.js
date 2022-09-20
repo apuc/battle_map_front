@@ -31,13 +31,12 @@ const MenuTop = ({mapRef, setBurgerActive}) => {
       const index = e.target.dataset.index
       switch (index) {
          case '0':
-
-            navigate('/'+ remainingParams(mapCenterUkraine,6))
+            //navigate('/'+ remainingParams(mapCenterUkraine,6))
             mapRef.current.setView(mapCenterUkraine, 6)
             setActiveMenuItem(+e.target.dataset.index)
             break
          case '1':
-            navigate('/'+ remainingParams(mapCenterDonbass, 7))
+            //navigate('/'+ remainingParams(mapCenterDonbass, 7))
             mapRef.current.setView(mapCenterDonbass, 7)
             setActiveMenuItem(+e.target.dataset.index)
             break
