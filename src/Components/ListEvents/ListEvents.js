@@ -11,7 +11,6 @@ import {TelegramIcon, VKIcon, VKShareButton, TelegramShareButton} from "react-sh
 import {useNavigate, useParams} from "react-router-dom";
 import {currentDate, formatDate, mapCenterUkraine} from "../../Constants";
 
-
 export const ListEvents = ({mapRef}) => {
 
    const [selectedNewsID, setSelectedNewsID] = useState(null)
@@ -37,28 +36,33 @@ export const ListEvents = ({mapRef}) => {
    });
 
    const showEvent = (id, date, event, coordinates) => {
+      if (id === selectedNewsID) return
+      newMarker && newMarker.remove()
+      setSelectedNewsID(id)
       if (coordinates) {
-         if (id === selectedNewsID) return
-         newMarker && newMarker.remove()
-         setSelectedNewsID(id)
          const center = news.find((item) => item.id === id).coordinates.split(',')
          mapRef.current.setView(center, zoom)
          let icon = new LeafIcon({iconUrl: 'https://front.dnr.one/' + event?.icon})
          setNewMarker(L.marker(center, {icon: icon}).addTo(mapRef.current))
          navigate('/' + timeConverter(date) + '/' + center[0] + '/' + center[1] + '/' + zoom)
       } else {
-         newMarker && newMarker.remove()
-         setSelectedNewsID(id)
          mapRef.current.setView(mapCenterUkraine, 6)
          navigate('/' + timeConverter(date) + '/' + mapCenterUkraine[0] + '/' + mapCenterUkraine[1] + '/' + 6)
       }
    }
 
    useEffect(() => {
-      if(mapRef.current){
-         const center = news.find((item) => item.coordinates === (params.latitude+','+params.longitude)).coordinates.split(',')
-         setNewMarker(L.marker(center).addTo(mapRef.current))
-         console.log(center)
+      if(mapRef.current && params.latitude && params.longitude){
+         const activeEvent = news.find((item) => item.coordinates === (params.latitude+','+params.longitude))
+         console.log(activeEvent)
+         if(activeEvent){
+            const center = activeEvent.coordinates.split(',')
+            let icon = new LeafIcon({iconUrl: 'https://front.dnr.one/' + activeEvent.event?.icon})
+            setSelectedNewsID(activeEvent.id)
+            setNewMarker(L.marker(center,{icon: icon}).addTo(mapRef.current))
+            const eventList = document.getElementById(`${activeEvent.id}`)
+            eventList.scrollIntoView({block: "center", behavior: "smooth"})
+         }
       }
    }, [mapRef.current])
 
@@ -122,6 +126,7 @@ export const ListEvents = ({mapRef}) => {
                           : 'events-list'
                      }
                      key={list.id}
+                     id={list.id+''}
                      onClick={() => showEvent(list.id, list.published_date, list.event, list.coordinates)}
                    >
                       <div className='events-list__header'>
