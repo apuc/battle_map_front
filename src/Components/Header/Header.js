@@ -49,7 +49,7 @@ export const Header = ({startPlayer, mapRef, setActiveModal, activeModal}) => {
               </div>
            </Modal>
            {<Modal active={activeListEvents} setActive={setActiveListEvents} title={'Последние события'} margin={0}>
-              <div className="sdad"></div>
+              <div className="list-events-mobile"></div>
            </Modal>}
 
         </div>

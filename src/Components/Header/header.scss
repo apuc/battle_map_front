@@ -89,9 +89,8 @@
   }
   &__buttons-block{
     margin: 20px 0;
-    display: none;
-    @media (max-width: 874px){
-      display: block;
+    @media (min-width: 769px){
+      display: none;
     }
   }
 
@@ -278,7 +277,11 @@
   &__icon-info{
     border: 1px solid;
     font-weight: 500;
-    padding: 0 14px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
     font-size: 30px;
     margin: 0 0 0 10px;
@@ -375,3 +378,4 @@
     line-height: 166%;
   }
 }
+

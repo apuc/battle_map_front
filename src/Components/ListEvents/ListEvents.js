@@ -117,12 +117,12 @@ export const ListEvents = ({mapRef}) => {
 
 
    return (
-     <div className='list-events' data-da='sdad,3,768'>
+     <div className='list-events' data-da='list-events-mobile,3,768'>
         <img className={'list-events__hide'} src={icon_back} alt="back"
              onClick={hideNews}/>
+        <h3>{!news.length ? 'Событий за этот период нет!' : 'Последние события:'} </h3>
         {
            <div className='list-events__container'>
-              <h3>{!news.length ? 'Событий за этот период нет!' : 'Последние события:'}</h3>
               {
                  news.map((list) => (
                    <article

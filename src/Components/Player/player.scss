@@ -1,8 +1,4 @@
 .player {
-  //position: absolute;
-  //z-index: 999;
-  //bottom: 0;
-  //width: 95%;
   position: absolute;
   z-index: 999;
   margin: 0 215px 0 45px;
@@ -80,13 +76,15 @@
 }
 .progress::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background: #ffffff;
-  cursor: pointer;
-  border: 4px solid #333;
-  box-shadow: -1200px 0 0 1200px #0c0f28;
+  //width: 15px;
+  //height: 15px;
+  //border-radius: 50%;
+  //background: #ffffff;
+  //cursor: pointer;
+  //border: 4px solid #333;
+  //z-index: 4500;
+  //position: relative;
+  //box-shadow: -1200px 0 0 1200px #0c0f28;
   @media (max-width: 684px) {
     width: 5px;
     height: 5px;
@@ -107,12 +105,10 @@
     }
   }
   &__line {
-    //height: 4.5px;
-    height: 14px;
+    height: 15px;
     width: 2px;
-   // margin-top: -42px;
-    margin-top: -19px;
-    background: #5357b7;
+    margin-top: -38px;
+    background: #4b4b52;
     @media (max-width: 684px) {
       height: 6px;
       margin-top: -11px;

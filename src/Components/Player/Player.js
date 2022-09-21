@@ -36,22 +36,6 @@ export const Player = ({ startPlayer, setStartPlayer }) => {
 
   const onStart = () => setStartPlayer((prev) => !prev)
 
-  // const forwardRewind = () => {
-  //    if(progressValue < 100){
-  //       dispatch(setGeoJson(geojsonData[Math.ceil((progressValue/stepPlayer))]))
-  //       setProgressValue(prev => prev + stepPlayer)
-  //    }
-  // }
-  //
-  // const backwardRewind = () => {
-  //    console.log('ifffff', Math.ceil(progressValue/stepPlayer)-1)
-  //    if(progressValue > 0){
-  //       console.log('ifffff2222222222', Math.ceil(progressValue/stepPlayer)-1)
-  //       dispatch(setGeoJson(geojsonData[Math.floor(progressValue/stepPlayer)-1]))
-  //       setProgressValue(prev => prev - stepPlayer)
-  //    }
-  // }
-
   const jumpEnd = () => {
     setProgressValue(100)
     dispatch(setGeoJson(geojsonData[geojsonData.length - 1]))
@@ -98,7 +82,6 @@ export const Player = ({ startPlayer, setStartPlayer }) => {
           >
             <FontAwesomeIcon icon={faBackwardStep} />
           </button>
-          {/*<button disabled={!geojsonData} className={'player__button'} onClick={backwardRewind}><FontAwesomeIcon icon={faBackward} /></button>*/}
           <button
             disabled={!geojsonData}
             className={'player__button'}
@@ -110,7 +93,6 @@ export const Player = ({ startPlayer, setStartPlayer }) => {
               <FontAwesomeIcon icon={faPlay} />
             )}
           </button>
-          {/*<button disabled={!geojsonData} className={'player__button'} onClick={forwardRewind}><FontAwesomeIcon icon={faForward} /></button>*/}
           <button
             disabled={!geojsonData}
             className={'player__button'}
@@ -129,6 +111,9 @@ export const Player = ({ startPlayer, setStartPlayer }) => {
             max={100}
             value={progressValue}
             onChange={(e) => changeProgressBar(e)}
+            style={{ backgroundImage: `linear-gradient( to right, #F2994A, 
+                        #F4C319 ${100*+progressValue/100}%, 
+                        #474747 ${100*+progressValue/100}%)`}}
           />
           {geojsonData &&
             geojsonData.map((item, index) => (
@@ -137,7 +122,7 @@ export const Player = ({ startPlayer, setStartPlayer }) => {
                 key={index}
                 style={{ left: index * stepPlayer + '%' }}
               >
-                {/*<p>{new Date(item.date).toLocaleString('ru', optionsDate)}</p>*/}
+                {<p>{new Date(item.date).toLocaleDateString().substring(0, 5)}</p>}
                 <div className={'hint__line'} />
               </div>
             ))}
