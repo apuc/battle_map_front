@@ -17,9 +17,6 @@ export const ListEvents = ({mapRef}) => {
    const news = useSelector(newsSelector)
    const metaNews = useSelector(_metaNewsSelector)
    const fetching = useSelector(isFetchingSelector)
-   const startDate = useSelector((state) => state.date.startDate)
-   const endDate = useSelector((state) => state.date.endDate)
-   const selectedDate = useSelector((state) => state.date.selectedDate)
    const zoom = 13
    const dispatch = useDispatch()
    const [newMarker, setNewMarker] = useState(null)
@@ -47,6 +44,8 @@ export const ListEvents = ({mapRef}) => {
       } else {
          mapRef.current.setView(mapCenterUkraine, 6)
       }
+      const eventList = document.getElementById(`${id}`)
+      eventList.scrollIntoView({block: "center", behavior: "smooth"})
       navigate('/' + timeConverter(date) + '/' + id)
    }
 
