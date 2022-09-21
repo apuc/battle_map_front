@@ -1,5 +1,5 @@
 .list-events {
-  padding: 50px 0 0 0;
+  padding: 60px 0 0 0;
   background: #f9f9f9;
   position: sticky;
   right: 0;
@@ -16,14 +16,14 @@
   }
   h3 {
     color: #001c30;
-    padding: 20px 0;
+    padding: 15px 0;
     position: sticky;
     z-index: 9999;
     background: #f9f9f9;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    top: 7px;
+    top: 0;
     span{
       cursor: pointer;
     }
