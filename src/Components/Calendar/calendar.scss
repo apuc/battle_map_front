@@ -6,18 +6,7 @@
   color: rgba(255,255,255,0.8);
   transition: 0.2s all ease;
   font-size: 14px;
-  position: relative;
-  &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    right: 0;
-    bottom: -3px;
-    width: 0;
-    height: 2px; /* Высота линии */
-    background-color: #ffffff; /* Цвет подчеркивания при исчезании линии*/
-    transition: width 0.4s; /* Время эффекта */
-  }
+
 
 
   &__input {
@@ -29,6 +18,30 @@
     font-size: inherit;
     outline: none;
     border: none;
+    position: relative;
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      right: 0;
+      bottom: -3px;
+      width: 0;
+      height: 2px; /* Высота линии */
+      background-color: #ffffff; /* Цвет подчеркивания при исчезании линии*/
+      transition: width 0.4s; /* Время эффекта */
+    }
+    &:hover:after {
+      content: "";
+      width: 100%;
+      display: block;
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      height: 2px; /* Высота линии */
+      background-color: #ffffff; /* Цвет подчеркивания при появлении линии*/
+      transition: width 0.4s;  /* Время эффекта */
+    }
   }
   @media (max-width: 646px) {
     font-size: 18px;
@@ -37,16 +50,6 @@
   &:hover{
     color: #ffffff;
   }
-  &:hover:after {
-    content: "";
-    width: 100%;
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: -3px;
-    height: 2px; /* Высота линии */
-    background-color: #ffffff; /* Цвет подчеркивания при появлении линии*/
-    transition: width 0.4s;  /* Время эффекта */
-  }
+
 }
 

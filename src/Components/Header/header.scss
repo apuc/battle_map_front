@@ -166,6 +166,10 @@
         padding: 12px 0 12px 0;
         border-radius: 7px;
         width: 100%;
+        &:hover:after{
+          height: 0;
+          width: 0;
+        }
       }
     }
 
@@ -201,31 +205,11 @@
       color: #fff;
       font-weight: 700;
     }
-    &::after {
-      content: "";
-      display: block;
-      position: absolute;
-      right: 0;
-      bottom: -3px;
-      width: 0;
-      height: 2px; /* Высота линии */
-      background-color: #ffffff; /* Цвет подчеркивания при исчезании линии*/
-      transition: width 0.4s; /* Время эффекта */
-    }
+
     &:hover {
      color: #fff;
     }
-    &:hover:after {
-      content: "";
-      width: 100%;
-      display: block;
-      position: absolute;
-      left: 0;
-      bottom: -3px;
-      height: 2px; /* Высота линии */
-      background-color: #ffffff; /* Цвет подчеркивания при появлении линии*/
-      transition: width 0.4s;  /* Время эффекта */
-    }
+
   }
 }
 
