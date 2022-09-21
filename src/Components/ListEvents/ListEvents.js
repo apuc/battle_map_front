@@ -6,7 +6,7 @@ import {_metaNewsSelector, isFetchingSelector, isLoadingSelector, newsSelector} 
 import {getMoreNews, getNews, setFetching} from '../../redux/News/newsAction'
 import logo from './../../Logo.jpg'
 import {timeConverter, timeConverterUnix} from "../../utils/configData";
-import icon_back from '../../icon-back-arrow-40.png'
+import icon_back from '../../icon_back.svg'
 import {TelegramIcon, VKIcon, VKShareButton, TelegramShareButton} from "react-share";
 import {useNavigate, useParams} from "react-router-dom";
 import {currentDate, formatDate, mapCenterUkraine} from "../../Constants";
@@ -101,7 +101,6 @@ export const ListEvents = ({mapRef}) => {
       const listEvents = document.querySelector('.list-events')
       const backArrow = document.querySelector('.list-events__hide')
       isShowEvents ? listEvents.style.transform = 'translateX(100%)' : listEvents.style.transform = 'translateX(0px)'
-      isShowEvents ? backArrow.style.transform = 'translateX(-50%) rotateY(0)' : backArrow.style.transform = 'translateX(0px) rotateY(180deg)'
    }
 
    const toggleEvent = (e) => {
@@ -118,11 +117,10 @@ export const ListEvents = ({mapRef}) => {
 
    return (
      <div className='list-events' data-da='list-events-mobile,3,768'>
-        <img className={'list-events__hide'} src={icon_back} alt="back"
-             onClick={hideNews}/>
-        <h3>{!news.length ? 'Событий за этот период нет!' : 'Последние события:'} </h3>
-        {
+        {!isShowEvents && <button className={'list-events__hide'} onClick={hideNews}><img src={icon_back}alt=""/> Показать события</button>}
+
            <div className='list-events__container'>
+              <h3>{!news.length ? 'Событий за этот период нет!' : 'Последние события:'}  <span onClick={hideNews}>&#10006;</span></h3>
               {
                  news.map((list) => (
                    <article
@@ -169,7 +167,6 @@ export const ListEvents = ({mapRef}) => {
                  fetching && <h4>Подождите идет загрузка...</h4>
               }
            </div>
-        }
      </div>
    )
 }

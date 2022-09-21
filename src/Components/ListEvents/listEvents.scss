@@ -16,11 +16,17 @@
   }
   h3 {
     color: #001c30;
-    position: sticky;
-    width: 100%;
     padding: 20px 0;
-    background: inherit;
-    text-align: center;
+    position: sticky;
+    z-index: 9999;
+    background: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    top: 7px;
+    span{
+      cursor: pointer;
+    }
     @media (max-width: 1024px) {
       //padding: 20px 18px;
     }
@@ -28,13 +34,20 @@
   &__hide{
     position: absolute;
     top: 74px;
-    width: 25px;
-    left: -20px;
-    transform-style: preserve-3d;
-    transition: 0.8s all ease;
-    transform: rotateY(180deg);
+    right: 110%;
+    background: #00194c;
+    padding: 10px 20px;
+    color: #fff;
     cursor: pointer;
+    display: flex;
+    align-items: center;
     z-index: 2;
+    white-space: nowrap;
+    border: none;
+    img{
+      width: 6px;
+      margin: 0 7px 0 0;
+    }
     @media (max-width: 768px) {
       display: none;
     }
