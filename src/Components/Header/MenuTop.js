@@ -112,16 +112,6 @@ const MenuTop = ({mapRef, setBurgerActive}) => {
                    {item.name}
                 </li>
               ))}
-              <li
-                className={'menu-sub__item'}
-              >
-                 Балаклея
-              </li>
-              <li
-                className={'menu-sub__item'}
-              >
-                 Херсон
-              </li>
            </ul>}
         </li>
      </ul>
