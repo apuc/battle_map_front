@@ -4,6 +4,8 @@ import {Calendar} from "../Calendar/Calendar";
 import {useDispatch, useSelector} from "react-redux";
 import {setEndDate, setSelectedDate, setStartDate} from "../../redux/Date/dataAction";
 import {useNavigate, useParams} from "react-router-dom";
+import {Modal} from "../Modal/Modal";
+import {MapLegend} from "../MapLegend/MapLegend";
 
 const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
 
@@ -12,6 +14,7 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
    const startDate = useSelector((state) => state.date.startDate)
    const endDate = useSelector((state) => state.date.endDate)
    const startDateParams =  params.date ? params.date.substring(0,10).toDate('dd.mm.yyyy', '.') : new Date()
+   const [activeLegend, setActiveLegend] = useState(false)
    const navigate = useNavigate()
 
    const onChangeDatePeriod = (dates) => {
@@ -169,6 +172,11 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
            <li data-da={'header__container,1,646'} className={'menu-date__item menu-date__item_question'} onClick={() => setActiveModal(true)}>
               <div className={'menu-date__icon-info'}>?</div>
            </li>
+           <li className={'menu-date__item'}>
+              <div className={'menu-date__legend'}>
+                 <img src="https://img.icons8.com/stickers/344/map-editing.png" alt="" onClick={() => setActiveLegend(true)}/>
+              </div>
+           </li>
            <li className='menu-date__item' onClick={() => onChangeDateOnly(new Date())} >
               <div className="menu-date__title">Сегодня:</div>
               <span>{currentDate.toLocaleString('ru', optionsDate)}</span>
@@ -193,6 +201,9 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
               />
            </li>
         </ul>
+        <Modal setActive={setActiveLegend} active={activeLegend} title={'Легенда'}>
+           <MapLegend />
+        </Modal>
 
      </>
    );
