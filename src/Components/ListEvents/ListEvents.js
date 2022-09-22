@@ -108,7 +108,7 @@ export const ListEvents = ({mapRef}) => {
          let card_event = e.target.closest('.events-list');
          let button_text = e.target.closest('.events-list').querySelector('.events-list__button-further');
          card_text.hidden = !card_text.hidden;
-         button_text.innerHTML = card_text.hidden ? 'Развернуть' : 'Скрыть';
+         button_text.innerHTML = card_text.hidden ? 'Подробно' : 'Скрыть';
          card_event.scrollIntoView({block: "center", behavior: "smooth"})
       }
    }
@@ -145,7 +145,7 @@ export const ListEvents = ({mapRef}) => {
                             <img src={'https://front.dnr.one/' + list.photo} alt={list.photo}/>
                          </div>
                          {<div className='events-list__text' hidden={true}>{list.news_body}</div>}
-                         {<div className="events-list__button-further" onClick={toggleEvent}>Развернуть</div>}
+                         {<div className="events-list__button-further" onClick={toggleEvent}>Подробно</div>}
                       </div>
                       <div className="events-list__share">
                          Поделиться:
