@@ -97,9 +97,13 @@ export const ListEvents = ({mapRef}) => {
 
    const hideNews = () => {
       setIsShowEvents(prev => !prev)
-      const listEvents = document.querySelector('.list-events')
+      console.log(isShowEvents)
+      const listEvents = document.querySelector('.list-events__container')
       const backArrow = document.querySelector('.list-events__hide')
-      isShowEvents ? listEvents.style.transform = 'translateX(100%)' : listEvents.style.transform = 'translateX(0px)'
+      //isShowEvents ? listEvents.style.transform = 'translateX(100%)' : listEvents.style.transform = 'translateX(0px)'
+      isShowEvents ? listEvents.style.opacity = '0' : listEvents.style.opacity = '1'
+        //isShowEvents ? listEvents.style.zIndex = '0' : listEvents.style.zIndex = '2000'
+      //isShowEvents ? backArrow.style.opacity = '1' : listEvents.style.transform = '0'
    }
 
    const toggleEvent = (e) => {
@@ -117,7 +121,6 @@ export const ListEvents = ({mapRef}) => {
    return (
      <div className='list-events' data-da='list-events-mobile,3,768'>
         {!isShowEvents && <button className={'list-events__hide'} onClick={hideNews}><img src={icon_back}alt=""/> Показать события</button>}
-
            <div className='list-events__container'>
               <h3>{!news.length ? 'Событий за этот период нет!' : 'Последние события:'}  <span onClick={hideNews}>&#10006;</span></h3>
               {

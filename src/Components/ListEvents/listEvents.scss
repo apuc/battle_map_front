@@ -1,12 +1,12 @@
 .list-events {
   padding: 60px 0 0 0;
-  background: #f9f9f9;
+
   position: sticky;
   right: 0;
   height: 100%;
   z-index: 2000;
   flex: 0 0 30%;
-  transition: 1s all;
+
 
   @media (min-width: 1200px) {
     flex: 0 0 20%;
@@ -34,7 +34,7 @@
   &__hide{
     position: absolute;
     top: 74px;
-    right: 110%;
+    right: 10%;
     background: #00194c;
     padding: 10px 20px;
     color: #fff;
@@ -55,8 +55,10 @@
 }
 
 .list-events__container {
+  background: #f9f9f9;
   height: 100%;
   overflow: auto;
+  transition: 0.8s;
   h3{
     @media (max-width: 768px) {
       display: none;
