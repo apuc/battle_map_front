@@ -110,7 +110,7 @@ export const Player = ({ startPlayer, setStartPlayer }) => {
             min={0}
             max={100}
             value={progressValue}
-            onChange={(e) => changeProgressBar(e)}
+            onChange={changeProgressBar}
             style={{ backgroundImage: `linear-gradient( to right, #F2994A, 
                         #F4C319 ${100*+progressValue/100}%, 
                         #474747 ${100*+progressValue/100}%)`}}
