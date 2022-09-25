@@ -15,8 +15,10 @@ import {FullscreenControl} from 'react-leaflet-fullscreen'
 import 'react-leaflet-fullscreen/dist/styles.css'
 import {mapCenterDonbass, mapCenterUkraine} from '../Constants'
 import {Player} from './Player/Player'
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {newsSelector} from "../redux/News/newsSelectors";
+import {setIdActiveNews} from "../redux/News/newsAction";
+import {timeConverter} from "../utils/configData";
 
 
 export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
@@ -34,8 +36,8 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
    const zoom = params.scale || 7
    const paramsDate = params.date || selectedDate.toLocaleDateString()
    const news = useSelector(newsSelector)
-
    const mediaScreen684 = window.matchMedia('(max-width: 684px)')
+   const navigate = useNavigate()
 
    const _onFeatureGroupReady = (reactFGref) => {
       let parsedGeoJSON = geojsonData ? JSON.parse(geojsonData) : null
@@ -141,16 +143,27 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
           ref={(item) => _onFeatureGroupReady(item)}
         />
         {news.map(item => {
+          // console.log(item)
+
            if (item.coordinates) {
               const center = item.coordinates.split(',')
               let icon = new LeafIcon({iconUrl: 'https://front.dnr.one/' + item.event?.icon})
+              if(item.id === +params.id){
+                 //const eventList = document.getElementById(`${item.id}`)
+                 //console.log(eventList)
+                 //mapRef.current.setView(center, 13,{animate:true})
+                 //dispatch(setIdActiveNews(item.id))
+                // eventList.scrollIntoView({block: "center", behavior: "smooth"})
+              }
               return <Marker position={center} icon={icon} key={item.id}
                              eventHandlers={{
                                 click: (e) => {
                                    if (e.latlng.lat === +center[0] && e.latlng.lng === +center[1]) {
                                       const eventList = document.getElementById(`${item.id}`)
                                       eventList.scrollIntoView({block: "center", behavior: "smooth"})
-                                      mapRef.current.setView(center, zoom)
+                                      mapRef.current.setView(center, 13,{animate:true})
+                                      dispatch(setIdActiveNews(item.id))
+                                      navigate('/' + timeConverter(item.published_date) + '/' + item.id)
                                    }
                                 },
                              }}

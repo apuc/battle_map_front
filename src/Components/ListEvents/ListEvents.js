@@ -2,8 +2,14 @@ import React, {useEffect, useRef, useState} from 'react'
 import './listEvents.scss'
 import {useDispatch, useSelector} from 'react-redux'
 import L from 'leaflet'
-import {_metaNewsSelector, isFetchingSelector, isLoadingSelector, newsSelector} from '../../redux/News/newsSelectors'
-import {getMoreNews, getNews, setFetching} from '../../redux/News/newsAction'
+import {
+   _metaNewsSelector, currentPageSelector,
+   idActiveNewsSelector,
+   isFetchingSelector,
+   isLoadingSelector,
+   newsSelector
+} from '../../redux/News/newsSelectors'
+import {getMoreNews, getNews, setFetching, setIdActiveNews} from '../../redux/News/newsAction'
 import logo from './../../Logo.jpg'
 import {timeConverter, timeConverterUnix} from "../../utils/configData";
 import icon_back from '../../icon_back.svg'
@@ -13,21 +19,21 @@ import {currentDate, formatDate, mapCenterUkraine} from "../../Constants";
 
 export const ListEvents = ({mapRef}) => {
 
-   const [selectedNewsID, setSelectedNewsID] = useState(null)
+   const selectedNewsID = useSelector(idActiveNewsSelector)
    const news = useSelector(newsSelector)
    const metaNews = useSelector(_metaNewsSelector)
    const fetching = useSelector(isFetchingSelector)
    const zoom = 13
    const dispatch = useDispatch()
    const [isShowEvents, setIsShowEvents] = useState(true)
-   const [currentPage, setCurrentPage] = useState(1)
+   const currentPage = useSelector(currentPageSelector)
    const navigate = useNavigate()
 
    let params = useParams();
 
    const showEvent = (id, date, event, coordinates) => {
       if (id === selectedNewsID) return
-      setSelectedNewsID(id)
+      dispatch(setIdActiveNews(id))
       if (coordinates) {
          const center = news.find((item) => item.id === id).coordinates.split(',')
          mapRef.current.setView(center, zoom)
@@ -36,18 +42,18 @@ export const ListEvents = ({mapRef}) => {
       }
       const eventList = document.getElementById(`${id}`)
       eventList.scrollIntoView({block: "center", behavior: "smooth"})
-      navigate('/' + timeConverter(date) + '/' + id)
+      navigate('/' + timeConverter(date) + params.date.substring(10,21) + '/' + id)
+      //navigate('/' + timeConverter(date) + '/' + id)
    }
 
    console.log('render events')
 
    useEffect(() => {
-         dispatch(getMoreNews(currentPage, fetching, params.date))
-         setCurrentPage(prev => prev + 1)
+         dispatch(getMoreNews(currentPage,fetching, params.date))
    }, [fetching])
 
    useEffect(() => {
-      dispatch(getNews(currentPage, params.date))
+      dispatch(getNews(params.date))
    }, [params.date])
 
    useEffect(() => {
@@ -67,13 +73,8 @@ export const ListEvents = ({mapRef}) => {
 
    const hideNews = () => {
       setIsShowEvents(prev => !prev)
-      console.log(isShowEvents)
       const listEvents = document.querySelector('.list-events__container')
-      const backArrow = document.querySelector('.list-events__hide')
-      //isShowEvents ? listEvents.style.transform = 'translateX(100%)' : listEvents.style.transform = 'translateX(0px)'
       isShowEvents ? listEvents.style.opacity = '0' : listEvents.style.opacity = '1'
-        //isShowEvents ? listEvents.style.zIndex = '0' : listEvents.style.zIndex = '2000'
-      //isShowEvents ? backArrow.style.opacity = '1' : listEvents.style.transform = '0'
    }
 
    const toggleEvent = (e) => {

@@ -13,3 +13,9 @@ export const isLoadingSelector = (state) => {
 export const isFetchingSelector = (state) => {
   return state.news.fetching
 }
+export const idActiveNewsSelector = (state) => {
+  return state.news.idActiveNews
+}
+export const currentPageSelector = (state) => {
+  return state.news.currentPage
+}

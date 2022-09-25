@@ -1,9 +1,18 @@
-import {GET_NEWS, SET_NEWS, SUPPLEMENT_NEWS, TOGGLE_IS__FETCHING} from './newsConstants'
+import {
+  GET_NEWS,
+  SET_CURRENT_PAGE,
+  SET_ID_ACTIVE_NEWS,
+  SET_NEWS,
+  SUPPLEMENT_NEWS,
+  TOGGLE_IS__FETCHING
+} from './newsConstants'
 
 let initialState = {
   news: [],
   meta: null,
-  fetching: false
+  fetching: false,
+  idActiveNews: null,
+  currentPage: 1
 }
 
 export const newsReducer = (state = initialState, action) => {
@@ -24,6 +33,16 @@ export const newsReducer = (state = initialState, action) => {
       return {
         ...state,
         fetching: action.payload,
+      }
+    case SET_ID_ACTIVE_NEWS:
+      return {
+        ...state,
+        idActiveNews: action.payload,
+      }
+    case SET_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: state.currentPage + 1,
       }
     default:
       return state
