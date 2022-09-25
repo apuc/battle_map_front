@@ -3,7 +3,7 @@ import {
    TileLayer,
    FeatureGroup,
    LayersControl,
-   MapContainer
+   MapContainer, Marker, Popup
 } from 'react-leaflet'
 import "../../node_modules/leaflet-minimap/dist/Control.MiniMap.min.css";
 import MiniMap from "leaflet-minimap";
@@ -16,6 +16,7 @@ import 'react-leaflet-fullscreen/dist/styles.css'
 import {mapCenterDonbass, mapCenterUkraine} from '../Constants'
 import {Player} from './Player/Player'
 import {useParams} from "react-router-dom";
+import {newsSelector} from "../redux/News/newsSelectors";
 
 
 export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
@@ -30,9 +31,9 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
       maxZoom: 13
    });
 
-   const zoom = params.scale || 6
+   const zoom = params.scale || 7
    const paramsDate = params.date || selectedDate.toLocaleDateString()
-
+   const news = useSelector(newsSelector)
 
    const mediaScreen684 = window.matchMedia('(max-width: 684px)')
 
@@ -85,6 +86,14 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
       }).addTo(mapRef.current);
 
    }, [mapRef.current])
+   let LeafIcon = L.Icon.extend({
+      options: {
+         iconSize: [38, 38],
+         shadowAnchor: [2, 50]
+
+      }
+   });
+   console.log('map render')
 
    return (
      <MapContainer
@@ -131,8 +140,27 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
         <FeatureGroup
           ref={(item) => _onFeatureGroupReady(item)}
         />
+        {news.map(item => {
+           if (item.coordinates) {
+              const center = item.coordinates.split(',')
+              let icon = new LeafIcon({iconUrl: 'https://front.dnr.one/' + item.event?.icon})
+              return <Marker position={center} icon={icon} key={item.id}
+                             eventHandlers={{
+                                click: (e) => {
+                                   if (e.latlng.lat === +center[0] && e.latlng.lng === +center[1]) {
+                                      const eventList = document.getElementById(`${item.id}`)
+                                      eventList.scrollIntoView({block: "center", behavior: "smooth"})
+                                      mapRef.current.setView(center, zoom)
+                                   }
+                                },
+                             }}
+              >
+              </Marker>
+           }
+        })}
+
         <FullscreenControl position='bottomleft'/>
-        <Player startPlayer={startPlayer} setStartPlayer={setStartPlayer} />
+        <Player startPlayer={startPlayer} setStartPlayer={setStartPlayer}/>
      </MapContainer>
    )
 }

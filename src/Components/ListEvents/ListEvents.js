@@ -19,28 +19,18 @@ export const ListEvents = ({mapRef}) => {
    const fetching = useSelector(isFetchingSelector)
    const zoom = 13
    const dispatch = useDispatch()
-   const [newMarker, setNewMarker] = useState(null)
    const [isShowEvents, setIsShowEvents] = useState(true)
    const [currentPage, setCurrentPage] = useState(1)
    const navigate = useNavigate()
 
    let params = useParams();
 
-   let LeafIcon = L.Icon.extend({
-      options: {
-         iconSize: [38, 38],
-      }
-   });
-
    const showEvent = (id, date, event, coordinates) => {
       if (id === selectedNewsID) return
-      newMarker && newMarker.remove()
       setSelectedNewsID(id)
       if (coordinates) {
          const center = news.find((item) => item.id === id).coordinates.split(',')
          mapRef.current.setView(center, zoom)
-         let icon = new LeafIcon({iconUrl: 'https://front.dnr.one/' + event?.icon})
-         setNewMarker(L.marker(center, {icon: icon}).addTo(mapRef.current))
       } else {
          mapRef.current.setView(mapCenterUkraine, 6)
       }
@@ -49,31 +39,11 @@ export const ListEvents = ({mapRef}) => {
       navigate('/' + timeConverter(date) + '/' + id)
    }
 
-   useEffect(() => {
-      if (mapRef.current && params.id) {
-         const activeEvent = news.find((item) => item.id === +params.id)
-         setSelectedNewsID(activeEvent.id)
-         const eventList = document.getElementById(`${activeEvent.id}`)
-         eventList.scrollIntoView({block: "center", behavior: "smooth"})
-         if (activeEvent.coordinates) {
-            const center = activeEvent.coordinates.split(',')
-            let icon = new LeafIcon({iconUrl: 'https://front.dnr.one/' + activeEvent.event?.icon})
-            setNewMarker(L.marker(center, {icon: icon}).addTo(mapRef.current))
-            mapRef.current.setView(center, zoom)
-         } else {
-            mapRef.current.setView(mapCenterUkraine, 6)
-         }
-      }
-   }, [mapRef.current])
-
    console.log('render events')
 
    useEffect(() => {
-
          dispatch(getMoreNews(currentPage, fetching, params.date))
          setCurrentPage(prev => prev + 1)
-
-
    }, [fetching])
 
    useEffect(() => {
