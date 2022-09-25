@@ -13,7 +13,7 @@ import {getDataGeoJson} from '../redux/GeoJson/geoJsonAction'
 import {filteredDataOnDate} from '../redux/GeoJson/geoJsonSelectors'
 import {FullscreenControl} from 'react-leaflet-fullscreen'
 import 'react-leaflet-fullscreen/dist/styles.css'
-import {mapCenterUkraine} from '../Constants'
+import {mapCenterDonbass, mapCenterUkraine} from '../Constants'
 import {Player} from './Player/Player'
 import {useParams} from "react-router-dom";
 
@@ -89,7 +89,7 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
    return (
      <MapContainer
        className={'map'}
-       center={!(params.latitude && params.longitude) ? mapCenterUkraine : [+params.latitude, +params.longitude]}
+       center={mapCenterDonbass}
        zoom={zoom}
        zoomControl={true}
        whenCreated={(mapInstance) => {
