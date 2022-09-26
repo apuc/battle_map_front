@@ -42,8 +42,9 @@ export const ListEvents = ({mapRef}) => {
       }
       const eventList = document.getElementById(`${id}`)
       eventList.scrollIntoView({block: "center", behavior: "smooth"})
+      params.date?.length !== 21 ? navigate('/' + timeConverter(date) + '/' + id)
+        :
       navigate('/' + timeConverter(date) + params.date.substring(10,21) + '/' + id)
-      //navigate('/' + timeConverter(date) + '/' + id)
    }
 
    console.log('render events')
@@ -57,6 +58,9 @@ export const ListEvents = ({mapRef}) => {
    }, [params.date])
 
    useEffect(() => {
+      if(params.id){
+         dispatch(setIdActiveNews(+params.id))
+      }
       let scrollList = document.querySelector('.list-events__container')
       scrollList.addEventListener('scroll', scrollHandler)
       return function () {

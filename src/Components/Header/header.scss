@@ -81,14 +81,17 @@
     color: #fff;
     border: none;
     cursor: pointer;
-    padding: 12px 35px;
+    padding: 5px 10px;
     border-radius: 7px;
     width: 100%;
-    font-size: 18px;
+    font-size: 14px;
     font-family: inherit;
+    white-space: nowrap;
   }
   &__buttons-block{
-    margin: 20px 0;
+    margin: 0 0 0 10px;
+    position: relative;
+    z-index: 2;
     @media (min-width: 769px){
       display: none;
     }
@@ -222,7 +225,7 @@
   position: relative;
   z-index: 2;
   gap: 2.2rem;
-  @media (max-width: 646px) {
+  @media (max-width: 767px) {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -241,7 +244,7 @@
     position: relative;
     transition: 0.2s all;
     color: rgba(255,255,255,0.8);
-    @media (max-width: 646px) {
+    @media (max-width: 767px) {
       font-size: 18px;
       flex-direction: row;
     }
@@ -252,6 +255,11 @@
       display: block;
       font-weight: 400;
       margin-left: 5px;
+    }
+    &_legend{
+      @media (max-width: 768px) {
+        flex-direction: row;
+      }
     }
     &:hover{
       color: #ffffff;
@@ -275,6 +283,15 @@
   &__legend{
     img{
       width: 40px;
+    }
+    @media (max-width: 768px) {
+      position: relative;
+      display: flex;
+      align-items: center;
+      &::before{
+        content: "Легенда:";
+        margin: 0 10px 0 0;
+      }
     }
   }
 }

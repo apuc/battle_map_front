@@ -39,6 +39,15 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
    const mediaScreen684 = window.matchMedia('(max-width: 684px)')
    const navigate = useNavigate()
 
+   let LeafIcon = L.Icon.extend({
+      options: {
+         iconSize: [38, 38],
+         shadowAnchor: [2, 50]
+
+      }
+   });
+   console.log('map render', )
+
    const _onFeatureGroupReady = (reactFGref) => {
       let parsedGeoJSON = geojsonData ? JSON.parse(geojsonData) : null
       let leafletGeoJSON = new L.GeoJSON(parsedGeoJSON)
@@ -88,14 +97,7 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
       }).addTo(mapRef.current);
 
    }, [mapRef.current])
-   let LeafIcon = L.Icon.extend({
-      options: {
-         iconSize: [38, 38],
-         shadowAnchor: [2, 50]
 
-      }
-   });
-   console.log('map render')
 
    return (
      <MapContainer
@@ -143,17 +145,13 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
           ref={(item) => _onFeatureGroupReady(item)}
         />
         {news.map(item => {
-          // console.log(item)
-
            if (item.coordinates) {
               const center = item.coordinates.split(',')
               let icon = new LeafIcon({iconUrl: 'https://front.dnr.one/' + item.event?.icon})
               if(item.id === +params.id){
-                 //const eventList = document.getElementById(`${item.id}`)
-                 //console.log(eventList)
-                 //mapRef.current.setView(center, 13,{animate:true})
-                 //dispatch(setIdActiveNews(item.id))
-                // eventList.scrollIntoView({block: "center", behavior: "smooth"})
+                 const eventList = document.getElementById(`${item.id}`)
+                 mapRef.current.setView(center, 13,{animate:true})
+                 eventList&&eventList.scrollIntoView({block: "center", behavior: "smooth"})
               }
               return <Marker position={center} icon={icon} key={item.id}
                              eventHandlers={{

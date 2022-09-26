@@ -26,7 +26,6 @@ const App = () => {
 
 const Main = () => {
    const [startPlayer, setStartPlayer] = useState(false)
-   const [activeModal, setActiveModal] = useState(false)
 
    const mapRef = useRef()
 
@@ -35,8 +34,6 @@ const Main = () => {
         <Header
           startPlayer={startPlayer}
           mapRef={mapRef}
-          setActiveModal={setActiveModal}
-          activeModal={activeModal}
         />
         <main className={'App__main'}>
            <Map

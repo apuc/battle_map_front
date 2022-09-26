@@ -168,13 +168,13 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
 
    return (
      <>
-        <ul className='menu-date' data-da='header__menu,first,646'>
-           <li data-da={'header__container,1,646'} className={'menu-date__item menu-date__item_question'} onClick={() => setActiveModal(true)}>
+        <ul className='menu-date' data-da='header__menu,first,767'>
+           <li data-da={'header__container,1,767'} className={'menu-date__item menu-date__item_question'} onClick={() => setActiveModal(true)}>
               <div className={'menu-date__icon-info'}>?</div>
            </li>
-           <li className={'menu-date__item'}>
+           <li data-da={'header__menu,1,768'} className={'menu-date__item menu-date__item_legend'} onClick={() => setActiveLegend(true)}>
               <div className={'menu-date__legend'}>
-                 <img src="https://img.icons8.com/stickers/344/map-editing.png" alt="" onClick={() => setActiveLegend(true)}/>
+                 <img src="https://img.icons8.com/stickers/344/map-editing.png" alt="" />
               </div>
            </li>
            <li className='menu-date__item' onClick={() => onChangeDateOnly(new Date())} >
