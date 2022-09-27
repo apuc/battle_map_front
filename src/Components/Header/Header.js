@@ -6,7 +6,7 @@ import MenuTop from "./MenuTop";
 import MenuDate from "./MenuDate";
 import {ListEvents} from "../ListEvents/ListEvents";
 
-export const Header = ({startPlayer, mapRef}) => {
+export const Header = ({mapRef}) => {
 
    const [burgerActive, setBurgerActive] = useState(false)
    const [activeModal, setActiveModal] = useState(false)
@@ -30,7 +30,7 @@ export const Header = ({startPlayer, mapRef}) => {
                  <span/>
               </div>
               <MenuTop mapRef={mapRef} setBurgerActive={setBurgerActive}/>
-              <MenuDate startPlayer={startPlayer} setActiveModal={setActiveModal} setBurgerActive={setBurgerActive}/>
+              <MenuDate setActiveModal={setActiveModal} setBurgerActive={setBurgerActive}/>
               <nav className={burgerActive ? 'header__menu active' : 'header__menu'}>
                  <div data-da={'header__container,1,768'} className={'header__buttons-block'}>
                     <button className={'header__button'} onClick={()=>openListEventsModal()}>Последние события</button>

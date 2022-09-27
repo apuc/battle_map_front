@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import './player.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { getDataGeoJson, setGeoJson } from '../../redux/GeoJson/geoJsonAction'
-import { filteredDataOnPeriod } from '../../redux/GeoJson/geoJsonSelectors'
+import {getDataGeoJson, setGeoJson, setStartPlayer} from '../../redux/GeoJson/geoJsonAction'
+import {filteredDataOnPeriod, startPlayerSelector} from '../../redux/GeoJson/geoJsonSelectors'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faCoffee,
@@ -15,9 +15,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { optionsDate } from '../../Constants'
 
-export const Player = ({ startPlayer, setStartPlayer }) => {
+export const Player = () => {
   const dispatch = useDispatch()
   const geojsonData = useSelector(filteredDataOnPeriod)
+  const startPlayer = useSelector(startPlayerSelector)
   const [progressValue, setProgressValue] = useState(0)
 
   const stepPlayer = geojsonData
@@ -34,7 +35,7 @@ export const Player = ({ startPlayer, setStartPlayer }) => {
     setProgressValue(+e.target.value)
   }
 
-  const onStart = () => setStartPlayer((prev) => !prev)
+  const onStart = () => dispatch(setStartPlayer())
 
   const jumpEnd = () => {
     setProgressValue(100)
@@ -47,8 +48,8 @@ export const Player = ({ startPlayer, setStartPlayer }) => {
   }
 
   useEffect(() => {
-    if (Math.ceil(progressValue) >= 100) {
-      setStartPlayer(false)
+    if (Math.ceil(progressValue) >=100) {
+      dispatch(setStartPlayer(false))
       return
     }
 
@@ -70,7 +71,7 @@ export const Player = ({ startPlayer, setStartPlayer }) => {
   if (!geojsonData || geojsonData.length === 1) {
     return null
   }
-  console.log(geojsonData)
+  console.log(startPlayer)
   return (
     <div className={'player'}>
       <div className='player__container'>

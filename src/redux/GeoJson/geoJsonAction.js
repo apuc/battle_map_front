@@ -1,4 +1,4 @@
-import {SET_GEO_JSON, ZEROING_GEO_JSON_FOR_PERIOD} from './geoJsonConsts'
+import {SET_GEO_JSON, SET_START_PLAYER, ZEROING_GEO_JSON_FOR_PERIOD} from './geoJsonConsts'
 import axios from "axios";
 
 export const setGeoJson = (geoJsonData) => ({
@@ -7,6 +7,7 @@ export const setGeoJson = (geoJsonData) => ({
 })
 
 export const zeroingDataPeriodGeoJson = () => ({type: ZEROING_GEO_JSON_FOR_PERIOD})
+export const setStartPlayer = (flag) => ({type: SET_START_PLAYER, payload: flag})
 
 
 export const getDataGeoJson = (date) => async (dispatch) => {

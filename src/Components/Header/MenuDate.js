@@ -7,7 +7,8 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Modal} from "../Modal/Modal";
 import {MapLegend} from "../MapLegend/MapLegend";
 
-const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
+
+const MenuDate = ({setActiveModal, setBurgerActive}) => {
 
    let params = useParams();
    const dispatch = useDispatch()
@@ -186,7 +187,6 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
                 startDate={startDateParams}
                 onChange={onChangeDateOnly}
                 selectsRange={false}
-                startPlayer={startPlayer}
                 title={'Выбранная дата:'}
               />
            </li>
@@ -196,7 +196,6 @@ const MenuDate = ({startPlayer, setActiveModal, setBurgerActive}) => {
                 endDate={endDate}
                 onChange={onChangeDatePeriod}
                 selectsRange={true}
-                startPlayer={startPlayer}
                 title={'Период:'}
               />
            </li>

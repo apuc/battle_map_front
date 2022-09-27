@@ -21,7 +21,7 @@ import {setIdActiveNews} from "../redux/News/newsAction";
 import {timeConverter} from "../utils/configData";
 
 
-export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
+export const Map = ({mapRef}) => {
 
    let params = useParams();
 
@@ -161,7 +161,7 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
                                       eventList.scrollIntoView({block: "center", behavior: "smooth"})
                                       mapRef.current.setView(center, 13,{animate:true})
                                       dispatch(setIdActiveNews(item.id))
-                                      navigate('/' + timeConverter(item.published_date) + '/' + item.id)
+                                      if(item.id !== +params.id) navigate('/' + timeConverter(item.published_date) + '/' + item.id)
                                    }
                                 },
                              }}
@@ -171,7 +171,7 @@ export const Map = ({startPlayer, setStartPlayer, mapRef}) => {
         })}
 
         <FullscreenControl position='bottomleft'/>
-        <Player startPlayer={startPlayer} setStartPlayer={setStartPlayer}/>
+        <Player />
      </MapContainer>
    )
 }

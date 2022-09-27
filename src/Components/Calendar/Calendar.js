@@ -4,17 +4,18 @@ import 'react-datepicker/dist/react-datepicker.css'
 import './calendar.scss'
 import {useParams} from "react-router-dom";
 import { ru } from "date-fns/locale";
+import {useSelector} from "react-redux";
+import {startPlayerSelector} from "../../redux/GeoJson/geoJsonSelectors";
 export const Calendar = ({
                             onChange,
                             endDate,
                             startDate,
                             selectsRange,
-                            startPlayer,
                             title
                          }) => {
 
    let params = useParams();
-
+   const startPlayer = useSelector(startPlayerSelector)
    const CustomInput = forwardRef(({value, onClick}, ref) => (
      <div className="calendar" onClick={onClick} ref={ref}>
         <div className="calendar__title">

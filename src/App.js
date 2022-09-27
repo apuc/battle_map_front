@@ -25,20 +25,16 @@ const App = () => {
 
 
 const Main = () => {
-   const [startPlayer, setStartPlayer] = useState(false)
 
    const mapRef = useRef()
 
    return (
      <>
         <Header
-          startPlayer={startPlayer}
           mapRef={mapRef}
         />
         <main className={'App__main'}>
            <Map
-             startPlayer={startPlayer}
-             setStartPlayer={setStartPlayer}
              mapRef={mapRef}
            />
            <ListEvents mapRef={mapRef}/>
