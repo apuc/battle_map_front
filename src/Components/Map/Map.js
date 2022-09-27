@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {
    TileLayer,
    FeatureGroup,
    LayersControl,
-   MapContainer, Marker, Popup
+   MapContainer, Marker
 } from 'react-leaflet'
 import "../../node_modules/leaflet-minimap/dist/Control.MiniMap.min.css";
 import MiniMap from "leaflet-minimap";
@@ -13,7 +13,7 @@ import {getDataGeoJson} from '../redux/GeoJson/geoJsonAction'
 import {filteredDataOnDate} from '../redux/GeoJson/geoJsonSelectors'
 import {FullscreenControl} from 'react-leaflet-fullscreen'
 import 'react-leaflet-fullscreen/dist/styles.css'
-import {mapCenterDonbass, mapCenterUkraine} from '../Constants'
+import {mapCenterDonbass} from '../Constants'
 import {Player} from './Player/Player'
 import {useNavigate, useParams} from "react-router-dom";
 import {newsSelector} from "../redux/News/newsSelectors";
@@ -21,7 +21,7 @@ import {setIdActiveNews} from "../redux/News/newsAction";
 import {timeConverter} from "../utils/configData";
 
 
-export const Map = ({mapRef}) => {
+const Map = ({mapRef}) => {
 
    let params = useParams();
 
@@ -33,7 +33,7 @@ export const Map = ({mapRef}) => {
       maxZoom: 13
    });
 
-   const zoom = params.scale || 7
+   const zoom = 7
    const paramsDate = params.date || selectedDate.toLocaleDateString()
    const news = useSelector(newsSelector)
    const mediaScreen684 = window.matchMedia('(max-width: 684px)')
@@ -43,10 +43,8 @@ export const Map = ({mapRef}) => {
       options: {
          iconSize: [38, 38],
          shadowAnchor: [2, 50]
-
       }
    });
-   console.log('map render', )
 
    const _onFeatureGroupReady = (reactFGref) => {
       let parsedGeoJSON = geojsonData ? JSON.parse(geojsonData) : null
@@ -76,9 +74,7 @@ export const Map = ({mapRef}) => {
    }
 
    useEffect(() => {
-      dispatch(
-        getDataGeoJson(paramsDate)
-      ) // eslint-disable-next-line
+      dispatch(getDataGeoJson(paramsDate))
    }, [paramsDate])
 
    useEffect(() => {
@@ -97,7 +93,6 @@ export const Map = ({mapRef}) => {
       }).addTo(mapRef.current);
 
    }, [mapRef.current])
-
 
    return (
      <MapContainer
@@ -145,11 +140,11 @@ export const Map = ({mapRef}) => {
           ref={(item) => _onFeatureGroupReady(item)}
         />
         {news.map(item => {
+           const eventList = document.getElementById(`${item.id}`)
            if (item.coordinates) {
               const center = item.coordinates.split(',')
               let icon = new LeafIcon({iconUrl: 'https://front.dnr.one/' + item.event?.icon})
               if(item.id === +params.id){
-                 const eventList = document.getElementById(`${item.id}`)
                  mapRef.current.setView(center, 13,{animate:true})
                  eventList&&eventList.scrollIntoView({block: "center", behavior: "smooth"})
               }
@@ -157,7 +152,6 @@ export const Map = ({mapRef}) => {
                              eventHandlers={{
                                 click: (e) => {
                                    if (e.latlng.lat === +center[0] && e.latlng.lng === +center[1]) {
-                                      const eventList = document.getElementById(`${item.id}`)
                                       eventList.scrollIntoView({block: "center", behavior: "smooth"})
                                       mapRef.current.setView(center, 13,{animate:true})
                                       dispatch(setIdActiveNews(item.id))
@@ -169,9 +163,10 @@ export const Map = ({mapRef}) => {
               </Marker>
            }
         })}
-
         <FullscreenControl position='bottomleft'/>
-        <Player />
+        <Player/>
      </MapContainer>
    )
 }
+
+export default React.memo(Map)
