@@ -1,6 +1,5 @@
 .list-events {
   padding: 60px 0 0 0;
-
   position: sticky;
   right: 0;
   height: 100%;
@@ -13,6 +12,7 @@
   }
   @media (max-width: 768px) {
     padding: 0;
+    height: 100vh;
   }
   h3 {
     color: #001c30;
