@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {mapCenterDonbass, mapCenterUkraine, menuHeaderList} from "../../Constants";
+import {mapCenterDonbass, mapCenterUkraine, menuHeaderList} from "../../utils/Constants";
 import axios from "axios";
 
 const MenuTop = ({mapRef, setBurgerActive}) => {
@@ -33,6 +33,14 @@ const MenuTop = ({mapRef, setBurgerActive}) => {
       setBurgerActive(false)
    }
 
+   const toClickOutsideArea = (e) => {
+      const sub = document.querySelector('#sub-list-battles')
+      const withinBoundaries = e.composedPath().includes(sub);
+      if (!withinBoundaries) {
+         setShowSubMenu(false)
+      }
+   }
+
    useEffect(async () => {
       try {
          const response = await axios.get(`${process.env.REACT_APP_API_URL}/bounds/get-bounds`)
@@ -40,13 +48,10 @@ const MenuTop = ({mapRef, setBurgerActive}) => {
       } catch (e) {
          setListBattles([{name: 'Данных нет', bounds: null},])
       }
-      document.addEventListener('click', (e) => {
-         const sub = document.querySelector('#sub-list-battles')
-         const withinBoundaries = e.composedPath().includes(sub);
-         if (!withinBoundaries) {
-            setShowSubMenu(false)
-         }
-      })
+      document.addEventListener('click', toClickOutsideArea)
+      return function () {
+         document.removeEventListener('click', toClickOutsideArea)
+      }
    }, [])
 
    return (
@@ -89,4 +94,4 @@ const MenuTop = ({mapRef, setBurgerActive}) => {
    );
 };
 
-export default MenuTop;
+export default React.memo(MenuTop);

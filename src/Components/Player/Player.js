@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import './player.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import {getDataGeoJson, setGeoJson, setStartPlayer} from '../../redux/GeoJson/geoJsonAction'
+import {setGeoJson, setStartPlayer} from '../../redux/GeoJson/geoJsonAction'
 import {filteredDataOnPeriod, startPlayerSelector} from '../../redux/GeoJson/geoJsonSelectors'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faCoffee,
   faBackwardStep,
   faForwardStep,
   faPlay,
   faPause,
-  faBackward,
-  faForward
 } from '@fortawesome/free-solid-svg-icons'
-import { optionsDate } from '../../Constants'
 
 export const Player = () => {
+
   const dispatch = useDispatch()
   const geojsonData = useSelector(filteredDataOnPeriod)
   const startPlayer = useSelector(startPlayerSelector)
@@ -52,7 +49,6 @@ export const Player = () => {
       dispatch(setStartPlayer(false))
       return
     }
-
     if (startPlayer) {
       const timer = setTimeout(() => {
         const index = Math.ceil(progressValue / stepPlayer + 1)
@@ -71,7 +67,7 @@ export const Player = () => {
   if (!geojsonData || geojsonData.length === 1) {
     return null
   }
-  console.log(startPlayer)
+
   return (
     <div className={'player'}>
       <div className='player__container'>
@@ -79,7 +75,7 @@ export const Player = () => {
           <button
             disabled={!geojsonData}
             className={'player__button'}
-            onClick={() => jumpStart()}
+            onClick={jumpStart}
           >
             <FontAwesomeIcon icon={faBackwardStep} />
           </button>
@@ -97,7 +93,7 @@ export const Player = () => {
           <button
             disabled={!geojsonData}
             className={'player__button'}
-            onClick={() => jumpEnd()}
+            onClick={jumpEnd}
           >
             <FontAwesomeIcon icon={faForwardStep} />
           </button>

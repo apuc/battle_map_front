@@ -9,7 +9,6 @@ export const setGeoJson = (geoJsonData) => ({
 export const zeroingDataPeriodGeoJson = () => ({type: ZEROING_GEO_JSON_FOR_PERIOD})
 export const setStartPlayer = (flag) => ({type: SET_START_PLAYER, payload: flag})
 
-
 export const getDataGeoJson = (date) => async (dispatch) => {
 
   const endDate = date.substring(11,21)

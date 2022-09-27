@@ -1,8 +1,8 @@
 import React, {useEffect, useRef} from "react";
-import {dynamicAdaptive} from "../utils/adaptiveFunction";
-import {Header} from "./Header/Header";
-import Map from "./Map";
-import {ListEvents} from "./ListEvents/ListEvents";
+import {dynamicAdaptive} from "../../utils/adaptiveFunction";
+import {Header} from "../Header/Header";
+import Map from "../Map/Map";
+import {ListEvents} from "../ListEvents/ListEvents";
 
 export const Main = () => {
 

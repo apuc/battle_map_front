@@ -42,7 +42,6 @@ export const getMoreNews = (page, fetching,date) => async (dispatch) => {
       }
 
       if(fetching){
-         console.log(path)
          const response = await axios.get(path)
          dispatch(setCurrentPage())
          dispatch(setNews(response.data))
@@ -77,7 +76,6 @@ export const getNews = (date) => async (dispatch) => {
          }
       }
       const response = await axios.get(path)
-      console.log(path)
       dispatch(supplementNews(response.data))
    } catch (e) {
       console.log(e)

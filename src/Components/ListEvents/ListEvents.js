@@ -1,21 +1,19 @@
 import React, {useEffect, useRef, useState} from 'react'
 import './listEvents.scss'
 import {useDispatch, useSelector} from 'react-redux'
-import L from 'leaflet'
 import {
    _metaNewsSelector, currentPageSelector,
    idActiveNewsSelector,
    isFetchingSelector,
-   isLoadingSelector,
    newsSelector
 } from '../../redux/News/newsSelectors'
 import {getMoreNews, getNews, setFetching, setIdActiveNews} from '../../redux/News/newsAction'
-import logo from './../../Logo.jpg'
-import {timeConverter, timeConverterUnix} from "../../utils/configData";
-import icon_back from '../../icon_back.svg'
+import logo from '../../assets/images/Logo.jpg'
+import {timeConverter} from "../../utils/configData";
+import icon_back from '../../assets/images/icon_back.svg'
 import {TelegramIcon, VKIcon, VKShareButton, TelegramShareButton} from "react-share";
 import {useNavigate, useParams} from "react-router-dom";
-import {currentDate, formatDate, mapCenterUkraine} from "../../Constants";
+import {mapCenterUkraine} from "../../utils/Constants";
 
 export const ListEvents = ({mapRef}) => {
 
@@ -42,12 +40,8 @@ export const ListEvents = ({mapRef}) => {
       }
       const eventList = document.getElementById(`${id}`)
       eventList.scrollIntoView({block: "center", behavior: "smooth"})
-      params.date?.length !== 21 ? navigate('/' + timeConverter(date) + '/' + id)
-        :
-      navigate('/' + timeConverter(date) + params.date.substring(10,21) + '/' + id)
+      navigate('/' + timeConverter(date) + '/' + id)
    }
-
-   console.log('render events')
 
    useEffect(() => {
          dispatch(getMoreNews(currentPage,fetching, params.date))

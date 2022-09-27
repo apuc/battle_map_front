@@ -33,7 +33,6 @@ export const geoJsonReducer = (state = initialState, action) => {
             storeGeoJsonForPeriod: null
          }
       case SET_START_PLAYER:
-         console.log(action)
          return {
             ...state,
             startPlayer: action.payload !== undefined ? action.payload : !state.startPlayer

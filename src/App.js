@@ -1,14 +1,11 @@
-import React, {useRef, useState} from 'react'
-import {Map} from './Components/Map'
-import {ListEvents} from './Components/ListEvents/ListEvents'
-import {Header} from './Components/Header/Header'
+import React from 'react'
 import {
    Routes,
    Route
 } from "react-router-dom";
+import {Main} from "./Components/Main/Main";
 
 const App = () => {
-
 
    return (
      <div className={'App'}>
@@ -22,27 +19,6 @@ const App = () => {
      </div>
    )
 }
-
-
-const Main = () => {
-
-   const mapRef = useRef()
-
-   return (
-     <>
-        <Header
-          mapRef={mapRef}
-        />
-        <main className={'App__main'}>
-           <Map
-             mapRef={mapRef}
-           />
-           <ListEvents mapRef={mapRef}/>
-        </main>
-
-     </>
-   );
-};
 
 export default App;
 

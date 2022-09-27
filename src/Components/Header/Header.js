@@ -1,21 +1,20 @@
-import React, {useEffect, useState} from 'react'
-import logo from './../../Logo.jpg'
+import React, {useState} from 'react'
+import logo from '../../assets/images/Logo.jpg'
 import './header.scss'
 import {Modal} from "../Modal/Modal";
 import MenuTop from "./MenuTop";
 import MenuDate from "./MenuDate";
-import {ListEvents} from "../ListEvents/ListEvents";
 
 export const Header = ({mapRef}) => {
 
    const [burgerActive, setBurgerActive] = useState(false)
-   const [activeModal, setActiveModal] = useState(false)
    const [activeListEvents, setActiveListEvents] = useState(false)
 
    const openListEventsModal = () => {
       setActiveListEvents(true)
       setBurgerActive(false)
    }
+
    return (
      <header className="header">
         <div className="header__container">
@@ -30,26 +29,16 @@ export const Header = ({mapRef}) => {
                  <span/>
               </div>
               <MenuTop mapRef={mapRef} setBurgerActive={setBurgerActive}/>
-              <MenuDate setActiveModal={setActiveModal} setBurgerActive={setBurgerActive}/>
+              <MenuDate setBurgerActive={setBurgerActive}/>
               <nav className={burgerActive ? 'header__menu active' : 'header__menu'}>
                  <div data-da={'header__container,1,768'} className={'header__buttons-block'}>
-                    <button className={'header__button'} onClick={()=>openListEventsModal()}>Последние события</button>
+                    <button className={'header__button'} onClick={openListEventsModal}>Последние события</button>
                  </div>
               </nav>
            </div>
-           <Modal setActive={setActiveModal} active={activeModal} title={'Информация'}>
-              <div className={'info'}>
-                 <p className={'info__text'}>Внимание!</p>
-                 <p className={'info__text'}>Администрация сайта не несет ответственности за точность, полноту или
-                    качество предоставленной информации.</p>
-                 <p className={'info__text'}>По требованию Роскомнадзора ООО «Портал» приводит данные о деталях
-                    военной операции на Украине на основании информаци и российских официальных источников.</p>
-              </div>
-           </Modal>
-           {<Modal active={activeListEvents} setActive={setActiveListEvents} title={'Последние события'} margin={0}>
+           <Modal active={activeListEvents} setActive={setActiveListEvents} title={'Последние события'} margin={0}>
               <div className="list-events-mobile"></div>
-           </Modal>}
-
+           </Modal>
         </div>
      </header>
    )

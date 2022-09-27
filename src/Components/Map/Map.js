@@ -5,20 +5,20 @@ import {
    LayersControl,
    MapContainer, Marker
 } from 'react-leaflet'
-import "../../node_modules/leaflet-minimap/dist/Control.MiniMap.min.css";
+import "leaflet-minimap/dist/Control.MiniMap.min.css";
 import MiniMap from "leaflet-minimap";
 import {useDispatch, useSelector} from 'react-redux'
 import L from 'leaflet'
-import {getDataGeoJson} from '../redux/GeoJson/geoJsonAction'
-import {filteredDataOnDate} from '../redux/GeoJson/geoJsonSelectors'
+import {getDataGeoJson} from '../../redux/GeoJson/geoJsonAction'
+import {filteredDataOnDate} from '../../redux/GeoJson/geoJsonSelectors'
 import {FullscreenControl} from 'react-leaflet-fullscreen'
 import 'react-leaflet-fullscreen/dist/styles.css'
-import {mapCenterDonbass} from '../Constants'
-import {Player} from './Player/Player'
+import {mapCenterDonbass} from '../../utils/Constants'
+import {Player} from '../Player/Player'
 import {useNavigate, useParams} from "react-router-dom";
-import {newsSelector} from "../redux/News/newsSelectors";
-import {setIdActiveNews} from "../redux/News/newsAction";
-import {timeConverter} from "../utils/configData";
+import {newsSelector} from "../../redux/News/newsSelectors";
+import {setIdActiveNews} from "../../redux/News/newsAction";
+import {timeConverter} from "../../utils/configData";
 
 
 const Map = ({mapRef}) => {
