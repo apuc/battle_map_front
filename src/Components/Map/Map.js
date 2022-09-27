@@ -146,13 +146,13 @@ const Map = ({mapRef}) => {
               let icon = new LeafIcon({iconUrl: 'https://front.dnr.one/' + item.event?.icon})
               if(item.id === +params.id){
                  mapRef.current.setView(center, 13,{animate:true})
-                 eventList&&eventList.scrollIntoView({block: "center", behavior: "smooth"})
+                 eventList&&eventList.scrollIntoView({block: "start", behavior: "smooth"})
               }
               return <Marker position={center} icon={icon} key={item.id}
                              eventHandlers={{
                                 click: (e) => {
                                    if (e.latlng.lat === +center[0] && e.latlng.lng === +center[1]) {
-                                      eventList.scrollIntoView({block: "center", behavior: "smooth"})
+                                      eventList.scrollIntoView({block: "start", behavior: "smooth"})
                                       mapRef.current.setView(center, 13,{animate:true})
                                       dispatch(setIdActiveNews(item.id))
                                       if(item.id !== +params.id) navigate('/' + timeConverter(item.published_date) + '/' + item.id)

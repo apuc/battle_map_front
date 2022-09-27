@@ -1,10 +1,12 @@
-export const timeConverter = (UNIX_timestamp) => {
+export const timeConverter = (UNIX_timestamp, withTime=false) => {
   let date = new Date(UNIX_timestamp * 1000);
   let months = ['01','02','03','04','05','06','07','08','09','10','11','12'];
   let year = date.getFullYear();
   let month = months[date.getMonth()];
   let day = date.getDate() >= 10 ? date.getDate() : "0" + date.getDate();
-  return day + '.' + month + '.' + year;
+  let hour = date.getHours()>= 10 ? date.getHours() : "0" + date.getHours();
+  let minute = date.getMinutes() >= 10 ? date.getMinutes() : "0" + date.getMinutes();
+  return withTime ? hour + ':' + minute + ' ' + day + '.' + month + '.' + year : day + '.' + month + '.' + year;
 }
 
 export const timeConverterUnix = (date) => {

@@ -32,14 +32,6 @@ export const ListEvents = ({mapRef}) => {
    const showEvent = (id, date, event, coordinates) => {
       if (id === selectedNewsID) return
       dispatch(setIdActiveNews(id))
-      if (coordinates) {
-         const center = news.find((item) => item.id === id).coordinates.split(',')
-         mapRef.current.setView(center, zoom)
-      } else {
-         mapRef.current.setView(mapCenterUkraine, 6)
-      }
-      const eventList = document.getElementById(`${id}`)
-      eventList.scrollIntoView({block: "center", behavior: "smooth"})
       navigate('/' + timeConverter(date) + '/' + id)
    }
 
@@ -73,8 +65,11 @@ export const ListEvents = ({mapRef}) => {
       setIsShowEvents(prev => !prev)
       const listEventsContainer = document.querySelector('.list-events__container')
       const listEvents = document.querySelector('.list-events')
+      const headerEvents = document.querySelector('.list-events h3')
       isShowEvents ? listEventsContainer.style.opacity = '0' : listEventsContainer.style.opacity = '1'
       isShowEvents ? listEvents.style.pointerEvents = 'none' : listEvents.style.pointerEvents = 'all'
+      isShowEvents ? listEvents.style.background = 'transparent' : listEvents.style.background = '#f9f9f9'
+      isShowEvents ? headerEvents.style.opacity = '0' : headerEvents.style.opacity = '1'
    }
 
    const toggleEvent = (e) => {
@@ -84,7 +79,7 @@ export const ListEvents = ({mapRef}) => {
          let button_text = e.target.closest('.events-list').querySelector('.events-list__button-further');
          card_text.hidden = !card_text.hidden;
          button_text.innerHTML = card_text.hidden ? 'Подробно' : 'Скрыть';
-         card_event.scrollIntoView({block: "center", behavior: "smooth"})
+         card_event.scrollIntoView({block: "start", behavior: "smooth"})
       }
    }
 
@@ -92,8 +87,8 @@ export const ListEvents = ({mapRef}) => {
    return (
      <div className='list-events' data-da='list-events-mobile,3,768'>
         {!isShowEvents && <button className={'list-events__hide'} onClick={hideNews}><img src={icon_back}alt=""/> Показать события</button>}
+        {<h3>{!news.length ? 'Событий за этот период нет!' : 'Последние события:'}  <span onClick={hideNews}>&#10006;</span></h3>}
            <div className='list-events__container'>
-              <h3>{!news.length ? 'Событий за этот период нет!' : 'Последние события:'}  <span onClick={hideNews}>&#10006;</span></h3>
               {
                  news.map((list) => (
                    <article
@@ -111,7 +106,7 @@ export const ListEvents = ({mapRef}) => {
                             <img src={list?.event?.icon ? 'https://front.dnr.one/' + list?.event?.icon : logo}
                                  alt={'icon'}/>
                          </div>
-                         <div className='events-list__data'>{timeConverter(list.published_date)}</div>
+                         <div className='events-list__data'>{timeConverter(list.published_date, true)}</div>
                       </div>
                       <div className='events-list__body'>
                          <div className="events-list__title">{list.title}</div>
