@@ -71,8 +71,10 @@ export const ListEvents = ({mapRef}) => {
 
    const hideNews = () => {
       setIsShowEvents(prev => !prev)
-      const listEvents = document.querySelector('.list-events__container')
-      isShowEvents ? listEvents.style.opacity = '0' : listEvents.style.opacity = '1'
+      const listEventsContainer = document.querySelector('.list-events__container')
+      const listEvents = document.querySelector('.list-events')
+      isShowEvents ? listEventsContainer.style.opacity = '0' : listEventsContainer.style.opacity = '1'
+      isShowEvents ? listEvents.style.pointerEvents = 'none' : listEvents.style.pointerEvents = 'all'
    }
 
    const toggleEvent = (e) => {
