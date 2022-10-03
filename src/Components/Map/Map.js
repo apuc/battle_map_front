@@ -61,12 +61,17 @@ const Map = ({mapRef}) => {
       leafletGeoJSON.eachLayer((layer) => {
          // добавляем стилизацию слоёв в GeoJSON
          let color = parsedGeoJSON.features[index].properties?.fill
-         // в случае polyline или polygon меняем цвет
+         let fillColor = parsedGeoJSON.features[index].properties?.fillColor || color
+         let fillOpacity = parsedGeoJSON.features[index].properties?.fillOpacity || '0.2'
+         let weight = parsedGeoJSON.features[index].properties?.weight || '3'
+         let opacity = parsedGeoJSON.features[index].properties?.opacity || '1'
+         // в случае polyline или polygon меняем свойства
          if (layer?.options?.color && color) {
             layer.options.color = color
-         }
-         // в случае point меняем иконку и цвет
-         else if (layer?.options?.icon && color) {
+            layer.options.fillColor = fillColor
+            layer.options.fillOpacity = fillOpacity
+            layer.options.weight = weight
+            layer.options.opacity = opacity
          }
          reactFGref.addLayer(layer)
          index++
