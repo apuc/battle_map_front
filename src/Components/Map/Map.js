@@ -19,6 +19,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {newsSelector} from "../../redux/News/newsSelectors";
 import {setIdActiveNews} from "../../redux/News/newsAction";
 import {timeConverter} from "../../utils/configData";
+import logo from '../../assets/images/Logo.jpg'
 
 
 const Map = ({mapRef}) => {
@@ -99,6 +100,20 @@ const Map = ({mapRef}) => {
 
    }, [mapRef.current])
 
+   const clickMarker = (e, center, eventList, item) => {
+
+
+      if (e.latlng.lat === +center[0] && e.latlng.lng === +center[1]) {
+         console.log('erw')
+         eventList&&eventList.scrollIntoView({block: "start", behavior: "smooth"})
+         mapRef.current.setView(center, 13, {animate: true})
+         dispatch(setIdActiveNews(item.id))
+         if (item.id !== +params.id) navigate('/' + timeConverter(item.published_date) + '/' + item.id)
+
+      }
+      console.log('erw')
+   }
+
    return (
      <MapContainer
        className={'map'}
@@ -149,23 +164,31 @@ const Map = ({mapRef}) => {
            if (item.coordinates) {
               const center = item.coordinates.split(',')
               let icon = new LeafIcon({iconUrl: 'https://front.dnr.one/' + item.event?.icon})
-              if(item.id === +params.id){
-                 mapRef.current.setView(center, 13,{animate:true})
-                 eventList&&eventList.scrollIntoView({block: "start", behavior: "smooth"})
+              if (item.id === +params.id) {
+                 mapRef.current.setView(center, 13, {animate: true})
+                 eventList && eventList.scrollIntoView({block: "start", behavior: "smooth"})
               }
-              return <Marker position={center} icon={icon} key={item.id}
-                             eventHandlers={{
-                                click: (e) => {
-                                   if (e.latlng.lat === +center[0] && e.latlng.lng === +center[1]) {
-                                      eventList.scrollIntoView({block: "start", behavior: "smooth"})
-                                      mapRef.current.setView(center, 13,{animate:true})
-                                      dispatch(setIdActiveNews(item.id))
-                                      if(item.id !== +params.id) navigate('/' + timeConverter(item.published_date) + '/' + item.id)
-                                   }
-                                },
-                             }}
-              >
-              </Marker>
+              return item.event?.icon ? <Marker
+                  position={center}
+                  icon={icon}
+                  key={item.id}
+                  eventHandlers={{
+                     click: (e) => clickMarker(e, center, eventList, item)
+                  }}
+                >
+                </Marker>
+                :
+                <Marker
+                  position={center}
+                  key={item.id}
+                  eventHandlers={{
+                     click: (e) => clickMarker(e, center, eventList, item)
+                  }}
+                >
+                </Marker>
+           } else {
+              // mapRef.current.setView(mapCenterDonbass, 13,{animate:true})
+              // eventList&&eventList.scrollIntoView({block: "start", behavior: "smooth"})
            }
         })}
         <FullscreenControl position='bottomleft'/>
