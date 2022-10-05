@@ -100,18 +100,11 @@ const Map = ({mapRef}) => {
 
    }, [mapRef.current])
 
-   const clickMarker = (e, center, eventList, item) => {
-
-
+   const clickMarker = (e, center, item) => {
       if (e.latlng.lat === +center[0] && e.latlng.lng === +center[1]) {
-         console.log('erw')
-         eventList&&eventList.scrollIntoView({block: "start", behavior: "smooth"})
-         mapRef.current.setView(center, 13, {animate: true})
          dispatch(setIdActiveNews(item.id))
          if (item.id !== +params.id) navigate('/' + timeConverter(item.published_date) + '/' + item.id)
-
       }
-      console.log('erw')
    }
 
    return (
@@ -173,7 +166,7 @@ const Map = ({mapRef}) => {
                   icon={icon}
                   key={item.id}
                   eventHandlers={{
-                     click: (e) => clickMarker(e, center, eventList, item)
+                     click: (e) => clickMarker(e, center, item)
                   }}
                 >
                 </Marker>
@@ -182,7 +175,7 @@ const Map = ({mapRef}) => {
                   position={center}
                   key={item.id}
                   eventHandlers={{
-                     click: (e) => clickMarker(e, center, eventList, item)
+                     click: (e) => clickMarker(e, center, item)
                   }}
                 >
                 </Marker>
