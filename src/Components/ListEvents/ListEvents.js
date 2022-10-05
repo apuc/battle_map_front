@@ -13,7 +13,7 @@ import {timeConverter} from "../../utils/configData";
 import icon_back from '../../assets/images/icon_back.svg'
 import {TelegramIcon, VKIcon, VKShareButton, TelegramShareButton} from "react-share";
 import {useNavigate, useParams} from "react-router-dom";
-import {mapCenterUkraine} from "../../utils/Constants";
+
 
 export const ListEvents = ({mapRef}) => {
 
@@ -29,7 +29,7 @@ export const ListEvents = ({mapRef}) => {
 
    let params = useParams();
 
-   const showEvent = (id, date, event, coordinates) => {
+   const showEvent = (id, date) => {
       if (id === selectedNewsID) return
       dispatch(setIdActiveNews(id))
       navigate('/' + timeConverter(date) + '/' + id)
@@ -85,9 +85,9 @@ export const ListEvents = ({mapRef}) => {
 
 
    return (
-     <div className='list-events' data-da='list-events-mobile,3,768'>
-        {!isShowEvents && <button className={'list-events__hide'} onClick={hideNews}><img src={icon_back}alt=""/> Показать события</button>}
-        {<h3>{!news.length ? 'Событий за этот период нет!' : 'Последние события:'}  <span onClick={hideNews}>&#10006;</span></h3>}
+     <div className='list-events'>
+        {<button className={'list-events__hide'} onClick={hideNews}><img src={icon_back}alt=""/> Показать события</button>}
+        {<h3>{!news.length ? 'Загрузка...' : 'Последние события:'}  <span onClick={hideNews}>&#10006;</span></h3>}
            <div className='list-events__container'>
               {
                  news.map((list) => (
@@ -99,7 +99,7 @@ export const ListEvents = ({mapRef}) => {
                      }
                      key={list.id}
                      id={list.id + ''}
-                     onClick={() => showEvent(list.id, list.published_date, list.event, list.coordinates)}
+                     onClick={() => showEvent(list.id, list.published_date)}
                    >
                       <div className='events-list__header'>
                          <div className='events-list__icon'>

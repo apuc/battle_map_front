@@ -15,18 +15,17 @@
     flex: 0 0 30%;
   }
   @media (max-width: 768px) {
-    padding: 0;
-    height: 94vh;
+    flex: 0 0 100%;
   }
   h3 {
     color: #001c30;
-    padding: 15px 0;
+    padding: 15px;
     position: fixed;
     z-index: 9999;
     background: #f9f9f9;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     top: 60px;
     transition: 0.8s;
     width: -webkit-fill-available;
@@ -35,9 +34,6 @@
     }
     span{
       cursor: pointer;
-    }
-    @media (max-width: 768px) {
-      display: none;
     }
   }
   &__hide{
@@ -59,7 +55,7 @@
       margin: 0 7px 0 0;
     }
     @media (max-width: 768px) {
-      display: none;
+      right: 2%;
     }
   }
 }
