@@ -180,8 +180,11 @@ const Map = ({mapRef}) => {
                 >
                 </Marker>
            } else {
-              // mapRef.current.setView(mapCenterDonbass, 13,{animate:true})
-              // eventList&&eventList.scrollIntoView({block: "start", behavior: "smooth"})
+            if (item.id === +params.id) {
+                 mapRef.current.setView(mapCenterDonbass, 7,{animate:true})
+              eventList&&eventList.scrollIntoView({block: "start", behavior: "smooth"})
+            }
+          
            }
         })}
         <FullscreenControl position='bottomleft'/>
