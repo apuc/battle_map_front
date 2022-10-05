@@ -6,6 +6,8 @@ import {useParams} from "react-router-dom";
 import { ru } from "date-fns/locale";
 import {useSelector} from "react-redux";
 import {startPlayerSelector} from "../../redux/GeoJson/geoJsonSelectors";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCalendarAlt} from "@fortawesome/free-solid-svg-icons";
 export const Calendar = ({
                             onChange,
                             endDate,
@@ -20,6 +22,7 @@ export const Calendar = ({
      <div className="calendar" onClick={onClick} ref={ref}>
         <div className="calendar__title">
            {title}
+           <FontAwesomeIcon icon={faCalendarAlt} />
         </div>
         <div className='calendar__input'>
            {(value || (params?.date && params?.date.length > 10 ? params?.date.replace('-', ' - ') : 'Выберите период')) || 'Выберите период'}

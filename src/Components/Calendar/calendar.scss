@@ -7,7 +7,11 @@
   transition: 0.2s all ease;
   font-size: 14px;
 
-
+  &__title{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
 
   &__input {
     color: inherit;
