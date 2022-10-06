@@ -20,6 +20,7 @@
     width: 100%;
     background: #e7eef4;
     margin: 15px;
+    overflow: auto;
     &.active{
       transform: scale(1);
     }

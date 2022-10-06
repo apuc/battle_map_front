@@ -6,11 +6,23 @@
     font-size: 18px;
     margin: 0 0 15px 0;
   }
+  &__icons{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+  }
   &__row{
     display: flex;
+    flex: 0 1 33.333%;
     align-items: center;
     gap: 10px;
     margin: 0 0 10px 0;
+    @media (max-width: 768px) {
+      flex: 0 1 50%;
+    }
+    @media (max-width: 568px) {
+      flex: 0 1 100%;
+    }
   }
   &__color{
     width: 70px;
@@ -22,6 +34,7 @@
       background: #FF0000;
     }
   }
+
 
   &__icon{
     width: 30px;
