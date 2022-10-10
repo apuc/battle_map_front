@@ -7,6 +7,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Modal} from "../Modal/Modal";
 import {MapLegend} from "../MapLegend/MapLegend";
 import {formatDate} from "../../utils/configData";
+import iconLegend from '../../assets/images/icon-legend.png'
 
 const MenuDate = ({setBurgerActive}) => {
 
@@ -46,7 +47,7 @@ const MenuDate = ({setBurgerActive}) => {
            </li>
            <li data-da={'header__menu,1,768'} className={'menu-date__item menu-date__item_legend'} onClick={() => setActiveLegend(true)}>
               <div className={'menu-date__legend'}>
-                 <img src="https://img.icons8.com/stickers/344/map-editing.png" alt="" />
+                 <img src={iconLegend} alt="icon-legend" />
               </div>
            </li>
            <li className='menu-date__item' onClick={() => onChangeDateOnly(new Date())} >
