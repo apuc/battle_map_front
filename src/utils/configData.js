@@ -88,3 +88,14 @@ function getMonthIndex(name) {
     return 11;
   }
 }
+
+export const expandTextEvent = (id) => {
+  let card_text = document.querySelector('#l'+id +' .events-list__text');
+  let button_text = document.querySelector('#l'+id +' .events-list__button-further');
+  let card_event = document.querySelector('#l' +id);
+  if(card_event){
+    card_text.hidden = false;
+    button_text.innerHTML = 'Скрыть';
+    card_event.scrollIntoView({block: "start", behavior: "smooth"})
+  }
+}

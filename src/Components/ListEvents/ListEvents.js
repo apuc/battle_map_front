@@ -86,7 +86,7 @@ export const ListEvents = ({mapRef}) => {
 
    return (
      <div className='list-events'>
-        {<button className={'list-events__hide'} onClick={hideNews}><img src={icon_back}alt=""/> Показать события</button>}
+        {<button className={'list-events__hide'} onClick={hideNews}><img src={icon_back} alt=""/>Последние события</button>}
         {<h3>{!news.length ? 'Загрузка...' : 'Последние события:'}  <span onClick={hideNews}>&#10006;</span></h3>}
            <div className='list-events__container'>
               {
@@ -98,7 +98,7 @@ export const ListEvents = ({mapRef}) => {
                           : 'events-list'
                      }
                      key={list.id}
-                     id={list.id + ''}
+                     id={'l'+list.id}
                      onClick={() => showEvent(list.id, list.published_date)}
                    >
                       <div className='events-list__header'>

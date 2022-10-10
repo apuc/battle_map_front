@@ -18,8 +18,7 @@ import {Player} from '../Player/Player'
 import {useNavigate, useParams} from "react-router-dom";
 import {newsSelector} from "../../redux/News/newsSelectors";
 import {setIdActiveNews} from "../../redux/News/newsAction";
-import {timeConverter} from "../../utils/configData";
-import logo from '../../assets/images/Logo.jpg'
+import {expandTextEvent, timeConverter} from "../../utils/configData";
 
 
 const Map = ({mapRef}) => {
@@ -79,6 +78,13 @@ const Map = ({mapRef}) => {
       })
    }
 
+   const clickMarker = (e, center, item) => {
+      if (e.latlng.lat === +center[0] && e.latlng.lng === +center[1]) {
+         dispatch(setIdActiveNews(item.id))
+         if (item.id !== +params.id) navigate('/' + timeConverter(item.published_date) + '/' + item.id)
+      }
+   }
+
    useEffect(() => {
       dispatch(getDataGeoJson(paramsDate))
    }, [paramsDate])
@@ -100,12 +106,6 @@ const Map = ({mapRef}) => {
 
    }, [mapRef.current])
 
-   const clickMarker = (e, center, item) => {
-      if (e.latlng.lat === +center[0] && e.latlng.lng === +center[1]) {
-         dispatch(setIdActiveNews(item.id))
-         if (item.id !== +params.id) navigate('/' + timeConverter(item.published_date) + '/' + item.id)
-      }
-   }
 
    return (
      <MapContainer
@@ -153,13 +153,12 @@ const Map = ({mapRef}) => {
           ref={(item) => _onFeatureGroupReady(item)}
         />
         {news.map(item => {
-           const eventList = document.getElementById(`${item.id}`)
            if (item.coordinates) {
               const center = item.coordinates.split(',')
               let icon = new LeafIcon({iconUrl: 'https://front.dnr.one/' + item.event?.icon})
               if (item.id === +params.id) {
                  mapRef.current.setView(center, 13, {animate: true})
-                 eventList && eventList.scrollIntoView({block: "start", behavior: "smooth"})
+                 expandTextEvent(item.id)
               }
               return item.event?.icon ? <Marker
                   position={center}
@@ -180,11 +179,10 @@ const Map = ({mapRef}) => {
                 >
                 </Marker>
            } else {
-            if (item.id === +params.id) {
-                 mapRef.current.setView(mapCenterDonbass, 7,{animate:true})
-              eventList&&eventList.scrollIntoView({block: "start", behavior: "smooth"})
-            }
-          
+              if (item.id === +params.id) {
+                 mapRef.current.setView(mapCenterDonbass, 7, {animate: true})
+                 expandTextEvent(item.id)
+              }
            }
         })}
         <FullscreenControl position='bottomleft'/>
