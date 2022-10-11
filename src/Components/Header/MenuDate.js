@@ -8,6 +8,9 @@ import {Modal} from "../Modal/Modal";
 import {MapLegend} from "../MapLegend/MapLegend";
 import {formatDate} from "../../utils/configData";
 import iconLegend from '../../assets/images/icon-legend.png'
+import {TelegramIcon, VKIcon} from "react-share";
+import logo from '../../assets/images/Logo.jpg'
+
 
 const MenuDate = ({setBurgerActive}) => {
 
@@ -79,6 +82,12 @@ const MenuDate = ({setBurgerActive}) => {
                  качество предоставленной информации.</p>
               <p className={'info__text'}>По требованию Роскомнадзора ООО «Портал» приводит данные о деталях
                  военной операции на Украине на основании информаци и российских официальных источников.</p>
+              <br/>
+              <p className={'info__links'}>
+                 <a href={'https://t.me/dnrone'} target={'_blank'}>  <TelegramIcon size={25} round={true}/></a>
+                 <a href={'https://da-info.pro/'} target={'_blank'}><img className={'info__website-logo'} src={logo} alt="logo"/></a>
+                 <a href={'https://vk.com/da_info_pro'} target={'_blank'}><VKIcon size={25} round={true}/></a>
+              </p>
            </div>
         </Modal>
         <Modal setActive={setActiveLegend} active={activeLegend} title={'Легенда'}>

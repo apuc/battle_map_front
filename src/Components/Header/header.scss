@@ -384,5 +384,16 @@
   &__text{
     line-height: 166%;
   }
+  &__links{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  &__website-logo{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+  }
 }
 
