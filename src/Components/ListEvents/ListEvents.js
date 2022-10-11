@@ -90,7 +90,7 @@ export const ListEvents = ({mapRef}) => {
         {<h3>{!news.length ? 'Загрузка...' : 'Последние события:'}  <span onClick={hideNews}>&#10006;</span></h3>}
            <div className='list-events__container'>
               {
-                 news.map((list) => (
+                 news.map((list, i) => (
                    <article
                      className={
                         list.id === selectedNewsID
@@ -129,6 +129,13 @@ export const ListEvents = ({mapRef}) => {
                             <VKIcon size={25} round={true}/>
                          </VKShareButton>
                       </div>
+                      {(i+1) % 3 === 0 && <div className="events-list__advertising">
+                         <p>Мы в соц. сетях: </p>
+                         <a href={'https://t.me/dnrone'} target={'_blank'}> <TelegramIcon size={25} round={true}/></a>
+                         <a href={'https://da-info.pro/'} target={'_blank'}><img className={'info__website-logo'}
+                                                                                 src={logo} alt="logo"/></a>
+                         <a href={'https://vk.com/da_info_pro'} target={'_blank'}><VKIcon size={25} round={true}/></a>
+                      </div>}
                    </article>
                  ))}
               {
