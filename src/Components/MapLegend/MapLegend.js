@@ -23,6 +23,10 @@ export const MapLegend = () => {
               <div className="legend__color legend__color_blue" />
               <div className="legend__none">Захваченные территории</div>
            </div>
+           <div className="legend__row">
+              <div className="legend__color legend__color_grey" />
+              <div className="legend__none">Спорные территории</div>
+           </div>
         </div>
         <div className="legend__title">Иконки</div>
         <div className="legend__icons">
