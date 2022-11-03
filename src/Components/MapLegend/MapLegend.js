@@ -5,9 +5,12 @@ import axios from "axios";
 export const MapLegend = () => {
 
    const [iconsLegend, setIconsLegend] = useState([])
+   const [territoryСolor, setTerritoryСolor] = useState([])
 
    useEffect(async ()=>{
       const response = await axios.get(`${process.env.REACT_APP_BASE_URL}event-type/get-event-types`)
+      const responseColor = await axios.get(`${process.env.REACT_APP_API_URL}/color/get-colors`)
+      setTerritoryСolor(responseColor.data.data)
       setIconsLegend(response.data.data)
    }, [])
 
@@ -15,18 +18,12 @@ export const MapLegend = () => {
      <div className={'legend'}>
         <div className="legend__control">
            <div className="legend__title">Зоны контроля</div>
-           <div className="legend__row">
-              <div className="legend__color legend__color_red" />
-              <div className="legend__none">Освобожденные территории</div>
-           </div>
-           <div className="legend__row">
-              <div className="legend__color legend__color_blue" />
-              <div className="legend__none">Захваченные территории</div>
-           </div>
-           <div className="legend__row">
-              <div className="legend__color legend__color_grey" />
-              <div className="legend__none">Спорные территории</div>
-           </div>
+           {territoryСolor?.map(item=>(
+             item.name && item.name.length !== 0 && <div className="legend__row" key={item.id}>
+                <div className="legend__color" style={{background: item.value}}/>
+                <div className="legend__none">{item.name}</div>
+             </div>
+           ))}
         </div>
         <div className="legend__title">Иконки</div>
         <div className="legend__icons">
