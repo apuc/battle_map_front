@@ -8,16 +8,33 @@ import {useSelector} from "react-redux";
 import {startPlayerSelector} from "../../redux/GeoJson/geoJsonSelectors";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendarAlt} from "@fortawesome/free-solid-svg-icons";
+
+
 export const Calendar = ({
                             onChange,
                             endDate,
                             startDate,
                             selectsRange,
-                            title
+                            title,
+                            selected
                          }) => {
 
    let params = useParams();
+
    const startPlayer = useSelector(startPlayerSelector)
+
+   const inputValueGeneration = (value) => {
+      if(!params.date){
+         return endDate === null ? 'Выберите период' : new Date().toLocaleDateString()
+      }
+      if(params?.date?.length !== 10){
+         return endDate !== null && selected === null ?
+           'Выберите дату' : params?.date.replace('-', ' - ')
+      } else{
+         return endDate === null ? 'Выберите период' : value
+      }
+   }
+   
    const CustomInput = forwardRef(({value, onClick}, ref) => (
      <div className="calendar" onClick={onClick} ref={ref}>
         <div className="calendar__title">
@@ -25,17 +42,16 @@ export const Calendar = ({
            <FontAwesomeIcon icon={faCalendarAlt} />
         </div>
         <div className='calendar__input'>
-           {(value || (params?.date && params?.date.length > 10 ? params?.date.replace('-', ' - ') : 'Выберите период')) || 'Выберите период'}
+           {inputValueGeneration(value)}
         </div>
      </div>
-
    ))
 
    return (
      <div className={'calendar'}>
         <DatePicker
           dateFormat='dd.MM.yyyy'
-          selected={startDate}
+          selected={selected}
           onChange={onChange}
           startDate={startDate}
           endDate={endDate}

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {currentDate} from "../../utils/Constants";
 import {Calendar} from "../Calendar/Calendar";
 import {useDispatch, useSelector} from "react-redux";
-import {setEndDate, setStartDate} from "../../redux/Date/dataAction";
+import {setEndDate, setSelectedDate, setStartDate} from "../../redux/Date/dataAction";
 import {useNavigate, useParams} from "react-router-dom";
 import {Modal} from "../Modal/Modal";
 import {MapLegend} from "../MapLegend/MapLegend";
@@ -18,7 +18,8 @@ const MenuDate = ({setBurgerActive}) => {
    const dispatch = useDispatch()
    const startDate = useSelector((state) => state.date.startDate)
    const endDate = useSelector((state) => state.date.endDate)
-   const startDateParams =  params.date ? params.date.substring(0,10).toDate('dd.mm.yyyy', '.') : new Date()
+   const startDateParams =  params.date?.length <= 10 ?
+     params.date.substring(0,10).toDate('dd.mm.yyyy', '.') : null
    const [activeLegend, setActiveLegend] = useState(false)
    const [activeInfoModal, setActiveInfoModal] = useState(false)
    const navigate = useNavigate()
@@ -37,6 +38,7 @@ const MenuDate = ({setBurgerActive}) => {
    const onChangeDateOnly = (dates) => {
       setBurgerActive(false)
       let remainingParams = params.latitude ? params.latitude + '/' + params?.longitude + '/' + params?.scale : ''
+         dispatch(setSelectedDate(formatDate(dates)))
       if(formatDate(dates) !== params.date){
          navigate("/"+ formatDate(dates)+'/'+remainingParams)
       }
@@ -59,7 +61,7 @@ const MenuDate = ({setBurgerActive}) => {
            </li>
            <li className='menu-date__item'>
               <Calendar
-                startDate={startDateParams}
+                selected={startDateParams}
                 onChange={onChangeDateOnly}
                 selectsRange={false}
                 title={'Выбранная дата:'}
