@@ -48,10 +48,10 @@ const MenuDate = ({setBurgerActive}) => {
      <>
         <ul className='menu-date' data-da='header__menu,first,767'>
            <li data-da={'header__container,1,767'} className={'menu-date__item menu-date__item_question'} onClick={() => setActiveInfoModal(true)}>
-              <div className={'menu-date__icon-info'}>?</div>
+              <div className={'menu-date__icon-info'} title={'Справка'}>?</div>
            </li>
            <li data-da={'header__menu,1,768'} className={'menu-date__item menu-date__item_legend'} onClick={() => setActiveLegend(true)}>
-              <div className={'menu-date__legend'}>
+              <div className={'menu-date__legend'} title={'Легенда'}>
                  <img src={iconLegend} alt="icon-legend" />
               </div>
            </li>
