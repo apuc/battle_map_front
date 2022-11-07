@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {
+   IS_LOADING,
    SET_CURRENT_PAGE,
    SET_ID_ACTIVE_NEWS,
    SET_NEWS,
@@ -72,6 +73,7 @@ export const getNews = (date) => async (dispatch) => {
    let path = `${process.env.REACT_APP_BASE_URL}news/filter?expand=category,tags,comments_count,photo,news_body,like&page=${1}`
 
    try {
+      dispatch(setLoading(true))
       if (date) {
          switch (date.length) {
             case 10:
@@ -86,9 +88,12 @@ export const getNews = (date) => async (dispatch) => {
       }
       const response = await axios.get(path)
       dispatch(supplementNews(response.data))
+      dispatch(setLoading(false))
    } catch (e) {
       console.log(e)
+      dispatch(setLoading(false))
    }
 }
 
 export const toggleNews = () => ({type: TOGGLE_NEWS})
+export const setLoading = (bool) => ({type: IS_LOADING, payload:bool})

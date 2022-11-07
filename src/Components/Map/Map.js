@@ -16,7 +16,7 @@ import 'react-leaflet-fullscreen/dist/styles.css'
 import {mapCenterDonbass} from '../../utils/Constants'
 import {Player} from '../Player/Player'
 import {useNavigate, useParams} from "react-router-dom";
-import {isShowEventsSelector, newsSelector} from "../../redux/News/newsSelectors";
+import {isLoadingSelector, isShowEventsSelector, newsSelector} from "../../redux/News/newsSelectors";
 import {setIdActiveNews, toggleNews} from "../../redux/News/newsAction";
 import {expandTextEvent, timeConverter} from "../../utils/configData";
 
@@ -27,6 +27,7 @@ const Map = ({mapRef}) => {
 
    const geojsonData = useSelector(filteredDataOnDate)
    const isShowEvents = useSelector(isShowEventsSelector)
+   const isLoading = useSelector(isLoadingSelector)
    const dispatch = useDispatch()
    const selectedDate = useSelector((state) => state.date.selectedDate)
    const minimapLayer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -169,8 +170,8 @@ const Map = ({mapRef}) => {
               const center = item.coordinates.split(',')
               let icon = new LeafIcon({iconUrl: 'https://front.dnr.one/' + item.event?.icon})
               if (item.id === +params.id) {
-                 mapRef.current.setView(center, 13, {animate: true})
-                 expandTextEvent(item.id)
+                 mapRef.current.setView(center, 13)
+                 !isLoading&&expandTextEvent(item.id)
               }
               return item.event?.icon ? <Marker
                   position={center}
@@ -192,7 +193,7 @@ const Map = ({mapRef}) => {
                 </Marker>
            } else {
               if (item.id === +params.id) {
-                 mapRef.current.setView(mapCenterDonbass, 7, {animate: true})
+                 mapRef.current.setView(mapCenterDonbass, 7)
                  expandTextEvent(item.id)
               }
            }

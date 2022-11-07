@@ -106,7 +106,7 @@ export const ListEvents = ({mapRef}) => {
                        : 'events-list'
                   }
                   key={list.id}
-                  id={'l' + list.id}
+                  id={'list-' + list.id}
                   onClick={() => showEvent(list.id, list.published_date)}
                 >
                    <div className='events-list__header'>

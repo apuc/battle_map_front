@@ -1,5 +1,5 @@
 import {
-  GET_NEWS,
+  GET_NEWS, IS_LOADING,
   SET_CURRENT_PAGE,
   SET_ID_ACTIVE_NEWS,
   SET_NEWS,
@@ -13,7 +13,8 @@ let initialState = {
   fetching: false,
   idActiveNews: null,
   currentPage: 1,
-  isShowEvents: true
+  isShowEvents: true,
+  isLoading: false,
 }
 
 export const newsReducer = (state = initialState, action) => {
@@ -49,6 +50,11 @@ export const newsReducer = (state = initialState, action) => {
       return {
         ...state,
         isShowEvents: !state.isShowEvents,
+      }
+    case IS_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload,
       }
     default:
       return state

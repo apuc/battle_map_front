@@ -90,9 +90,9 @@ function getMonthIndex(name) {
 }
 
 export const expandTextEvent = (id) => {
-  let card_text = document.querySelector('#l'+id +' .events-list__text');
-  let button_text = document.querySelector('#l'+id +' .events-list__button-further');
-  let card_event = document.querySelector('#l' +id);
+  let card_text = document.querySelector('#list-'+id +' .events-list__text');
+  let button_text = document.querySelector('#list-'+id +' .events-list__button-further');
+  let card_event = document.querySelector('#list-' +id);
   if(card_event){
     card_text.hidden = false;
     button_text.innerHTML = 'Скрыть';
