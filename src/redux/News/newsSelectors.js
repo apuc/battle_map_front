@@ -19,3 +19,7 @@ export const idActiveNewsSelector = (state) => {
 export const currentPageSelector = (state) => {
   return state.news.currentPage
 }
+
+export const isShowEventsSelector = (state) => {
+  return state.news.isShowEvents
+}

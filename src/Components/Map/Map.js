@@ -16,8 +16,8 @@ import 'react-leaflet-fullscreen/dist/styles.css'
 import {mapCenterDonbass} from '../../utils/Constants'
 import {Player} from '../Player/Player'
 import {useNavigate, useParams} from "react-router-dom";
-import {newsSelector} from "../../redux/News/newsSelectors";
-import {setIdActiveNews} from "../../redux/News/newsAction";
+import {isShowEventsSelector, newsSelector} from "../../redux/News/newsSelectors";
+import {setIdActiveNews, toggleNews} from "../../redux/News/newsAction";
 import {expandTextEvent, timeConverter} from "../../utils/configData";
 
 
@@ -26,6 +26,7 @@ const Map = ({mapRef}) => {
    let params = useParams();
 
    const geojsonData = useSelector(filteredDataOnDate)
+   const isShowEvents = useSelector(isShowEventsSelector)
    const dispatch = useDispatch()
    const selectedDate = useSelector((state) => state.date.selectedDate)
    const minimapLayer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -80,6 +81,17 @@ const Map = ({mapRef}) => {
 
    const clickMarker = (e, center, item) => {
       if (e.latlng.lat === +center[0] && e.latlng.lng === +center[1]) {
+         const listEventsContainer = document.querySelector('.list-events__container')
+         const listEvents = document.querySelector('.list-events')
+         const headerEvents = document.querySelector('.list-events h3')
+         console.log('map ', isShowEvents)
+         if(!isShowEvents){
+            dispatch(toggleNews())
+            listEventsContainer.style.opacity = '1'
+            listEvents.style.pointerEvents = 'all'
+            listEvents.style.background = '#f9f9f9'
+            headerEvents.style.opacity = '1'
+         }
          dispatch(setIdActiveNews(item.id))
          if (item.id !== +params.id) navigate('/' + timeConverter(item.published_date) + '/' + item.id)
       }

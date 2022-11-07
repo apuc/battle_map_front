@@ -1,19 +1,29 @@
 import axios from 'axios'
-import {SET_CURRENT_PAGE, SET_ID_ACTIVE_NEWS, SET_NEWS, SUPPLEMENT_NEWS, TOGGLE_IS__FETCHING} from './newsConstants'
+import {
+   SET_CURRENT_PAGE,
+   SET_ID_ACTIVE_NEWS,
+   SET_NEWS,
+   SUPPLEMENT_NEWS,
+   TOGGLE_IS__FETCHING,
+   TOGGLE_NEWS
+} from './newsConstants'
 import {timeConverterUnix} from "../../utils/configData";
 
 const setNews = (news) => ({
    type: SET_NEWS,
    payload: news
 })
+
 const supplementNews = (news) => ({
    type: SUPPLEMENT_NEWS,
    payload: news
 })
+
 export const setIdActiveNews = (id) => ({
    type: SET_ID_ACTIVE_NEWS,
    payload: id
 })
+
 export const setCurrentPage = () => ({
    type: SET_CURRENT_PAGE
 })
@@ -54,7 +64,6 @@ export const getMoreNews = (page, fetching,date) => async (dispatch) => {
    }
 }
 
-
 export const getNews = (date) => async (dispatch) => {
 
    const dateFrom = date && timeConverterUnix(date.substring(0, 10))
@@ -81,3 +90,5 @@ export const getNews = (date) => async (dispatch) => {
       console.log(e)
    }
 }
+
+export const toggleNews = () => ({type: TOGGLE_NEWS})

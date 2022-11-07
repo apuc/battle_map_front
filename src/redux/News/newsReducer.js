@@ -4,7 +4,7 @@ import {
   SET_ID_ACTIVE_NEWS,
   SET_NEWS,
   SUPPLEMENT_NEWS,
-  TOGGLE_IS__FETCHING
+  TOGGLE_IS__FETCHING, TOGGLE_NEWS
 } from './newsConstants'
 
 let initialState = {
@@ -12,7 +12,8 @@ let initialState = {
   meta: null,
   fetching: false,
   idActiveNews: null,
-  currentPage: 1
+  currentPage: 1,
+  isShowEvents: true
 }
 
 export const newsReducer = (state = initialState, action) => {
@@ -43,6 +44,11 @@ export const newsReducer = (state = initialState, action) => {
       return {
         ...state,
         currentPage: state.currentPage + 1,
+      }
+    case TOGGLE_NEWS:
+      return {
+        ...state,
+        isShowEvents: !state.isShowEvents,
       }
     default:
       return state
